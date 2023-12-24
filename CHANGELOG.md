@@ -1,45 +1,34 @@
-## v4.22.0-beta.1
+## v4.28.3
 
-### 改进
+### 新增 | New
 
-- 更新游戏资源 @yuanyan3060 @MistEO
-- 拆分所有肉鸽资源文件 (#5856) @MistEO @Lancarus
-- 优化萨米肉鸽不期而遇 (#5890) @cenfusheng
-- 傀影肉鸽适配更多干员 (#5817) @cenfusheng
-- 适配萨米肉鸽关卡“豪华车队” (#5798) @cenfusheng
-- 肉鸽开局助战or自选干员后不再要求选用start属性干员 (#5824) @LingXii
-- 增加强制替换adb的信息提示，增加异常处理 (#5838) @ABA2396
+- 新增 自走机械搏斗场、塔山农业实验平台 保全作业 (#7696) @junyihan233
 
-### 修复
+### 改进 | Improved
 
-- 强制替换adb报错 @ABA2396
-- 修复纯烬艾雅法拉识别 (#5791) @Black1312
-- 修复了傀影肉鸽的一些错误 (#5859) @Lancarus
-- 修正 zh-cn.xaml 文本错误 (#5861) @javilak
+- Mac GUI 改进设置布局 @hguandl
+- 优化萨米boss关打法 (#7662) @Lancarus
 
-### 其他
+### 修复 | Fix
 
-- 为文档添加docsearch和sitemap支持 (#5785) @SherkeyXD
-- CI-在静态分析中增加基线 (#5757)(#5867) @hxdnshx
-- 修改了部分肉鸽文档 (#5873) @Lancarus
-- typo of 1.3-模拟器支持.md (#5802) @BlueandwhiteXD
+- 修复肉鸽烧水逻辑错误、肉鸽卡在第三层 boss 等策略相关问题 (#7597, #7724) @zzyyyl
+- 修复傀影肉鸽识别到灰色节点的问题 @zzyyyl
+- 修复肉鸽商店投资退出过快卡在 `StageTraderInvestSystemLeave` 的问题 (#7720) @zzyyyl
+- Mac GUI 修复作业文件路径错误 @hguandl
+- Mac GUI 修复指针warning @hguandl
+- 修复部分情况下连续战斗次数无法正确调为1并导致卡在该流程的错误 (#7646) @status102
+
+### 其他 | Other
+
+- Error: Process completed with exit code 1. in github actions @David
+- 基建换班-继续专精 参数字段名格式不一致 @status102
+- 修复国服保全作业命名错误 @status102
+- Revert 基建新增领取专精功能 (#7624) @status102
+- 提交 issue 时要求检查置顶议题 (#7717) @zzyyyl
+- 移动旧保全作业 @status102
+- wpfGui: 增加`ScrollView`触屏支持 (#7340) @Cryolitia
+- Mac GUI 改为沙盒内控制客户端并移除 XPC @hguandl
 
 ### For overseas
 
-#### txwy
-
-- 更新繁中服肉鴿不期而遇 ocrReplace (#5882) @momomochi987
-- 修正繁中服水月肉鴿會卡在 "緊急運輸" 的問題 (#5790) @momomochi987
-
-#### YostarEN
-
-- d0dc294 auto update version issue @Constrat
-- more long names regex for OperBox @Constrat
-- ROI for BattleStartOCR, new IMG+ROI for Oper @Constrat
-- OperBox regex, BattleMatcher regex, longname and IS @Constrat
-- modified text for EX stages (WB event) @Constrat
-- SSS Identification issue with NON-1080 emulators @Constrat
-
-#### YostarKR
-
-- Goldenglow(澄闪) & Surtr(史尔特尔) ocrReplace (#5852) @Large-Japchae
+- 修复外服肉鸽不期而遇战斗选项引起的卡住的问题 (#7675) @zzyyyl

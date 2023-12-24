@@ -1,10 +1,11 @@
 {
     "activity": {
-        "name": "Trials for Navigator",
-        "time": 1693501200
+        "name": "Lingering Echoes - Rerun",
+        "time": 1704474000
     },
     "gacha": {
-        "pool": "Springtide Snowfall",
-        "time": 1692723600
-    }
+        "pool": "Here I Stand",
+        "time": 1699376400
+    },
+    "last_updated": "2023-12-21 11:25:26.358"
 }

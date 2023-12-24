@@ -6,7 +6,7 @@
 
 <br>
 <div>
-    <img alt="C++" src="https://img.shields.io/badge/c++-20-%2300599C?logo=cplusplus">
+    <img alt="C++" src="https://img.shields.io/badge/C++-20-%2300599C?logo=cplusplus">
 </div>
 <div>
     <img alt="platform" src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-blueviolet">
@@ -14,7 +14,10 @@
 <div>
     <img alt="license" src="https://img.shields.io/github/license/MaaAssistantArknights/MaaAssistantArknights">
     <img alt="commit" src="https://img.shields.io/github/commit-activity/m/MaaAssistantArknights/MaaAssistantArknights?color=%23ff69b4">
+</div>
+<div>
     <img alt="stars" src="https://img.shields.io/github/stars/MaaAssistantArknights/MaaAssistantArknights?style=social">
+    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/MaaAssistantArknights/MaaAssistantArknights/total?style=social">
 </div>
 <br>
 
@@ -57,6 +60,7 @@ UIを見れば使い方もすぐ分かる！<br>
 
 1. [エミュレータのサポート](./1.3-エミュレータのサポート.md)を参照して、対応するエミュレーターの操作に進んでください。
 2. エミュレータ解像度を `16:9`、`1280 * 720` 以上に変更してください。それより大きい解像度でも大丈夫です。
+<br>YostarENでは、ゲームインターフェイスの問題から、解像度を`1920 * 1080`に変更することをお勧めします。
 3. ゲームスタート！
 
 詳しいマニュアルは[MAA使用説明書](./1.1-詳細説明.md)を参照してください。
@@ -119,7 +123,7 @@ UIを見れば使い方もすぐ分かる！<br>
 
 MAAをより良くするために開発・テストに貢献してくれたすべての方々に感謝します！ (\*´▽｀)ノノ
 
-[![Contributors](https://contributors-img.web.app/image?repo=MaaAssistantArknights/MaaAssistantArknights)](https://github.com/MaaAssistantArknights/MaaAssistantArknights/graphs/contributors)
+[![Contributors](https://contributors-img.web.app/image?repo=MaaAssistantArknights/MaaAssistantArknights&max=114514&columns=15)](https://github.com/MaaAssistantArknights/MaaAssistantArknights/graphs/contributors)
 
 ## 開発について
 

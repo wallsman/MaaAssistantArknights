@@ -6,7 +6,7 @@
 
 <br>
 <div>
-    <img alt="C++" src="https://img.shields.io/badge/c++-20-%2300599C?logo=cplusplus">
+    <img alt="C++" src="https://img.shields.io/badge/C++-20-%2300599C?logo=cplusplus">
 </div>
 <div>
     <img alt="platform" src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-blueviolet">
@@ -14,8 +14,12 @@
 <div>
     <img alt="license" src="https://img.shields.io/github/license/MaaAssistantArknights/MaaAssistantArknights">
     <img alt="commit" src="https://img.shields.io/github/commit-activity/m/MaaAssistantArknights/MaaAssistantArknights?color=%23ff69b4">
-    <img alt="stars" src="https://img.shields.io/github/stars/MaaAssistantArknights/MaaAssistantArknights?style=social">
 </div>
+<div>
+    <img alt="stars" src="https://img.shields.io/github/stars/MaaAssistantArknights/MaaAssistantArknights?style=social">
+    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/MaaAssistantArknights/MaaAssistantArknights/total?style=social">
+</div>
+<br>
 <br>
 
 [简体中文](../readme.md) | [繁體中文](../zh-tw/readme.md) | [English](../en-us/readme.md) | [日本語](../ja-jp/readme.md) | [한국어](./readme.md)
@@ -55,7 +59,8 @@ MAA는 MAA Assistant Arknights의 약자입니다
 ### 기본 설정
 
 1. [에뮬레이터 지원](./1.3-에뮬레이터_지원.md) 문서를 참고하여 에뮬레이터/기기를 설정해 주세요.
-2. 에뮬레이터/기기의 해상도를 `1280 × 720` 또는 그 이상의 `16:9` 비율인 해상도로 맞춰주세요.
+2. 에뮬레이터/기기의 해상도를 `1280 × 720` 또는 그 이상의 `16:9` 비율인 해상도로 맞춰주세요. <br>
+   YostarEN의 경우 게임 인터페이스 문제로 인해 해상도를 '1920 * 1080'으로 변경하는 것을 권장합니다
 3. 어시스턴트 시작!
 
 자세한 내용은 [사용자 설명서](./1.1-사용자_설명서.md)를 참조해 주세요.
@@ -120,7 +125,7 @@ MAA는 MAA Assistant Arknights의 약자입니다
 
 MAA의 개선을 위한 개발/테스트에 기여해준 모든 친구들에게 감사드립니다! (\*´▽｀)ノノ
 
-[![Contributors](https://contributors-img.web.app/image?repo=MaaAssistantArknights/MaaAssistantArknights)](https://github.com/MaaAssistantArknights/MaaAssistantArknights/graphs/contributors)
+[![Contributors](https://contributors-img.web.app/image?repo=MaaAssistantArknights/MaaAssistantArknights&max=114514&columns=15)](https://github.com/MaaAssistantArknights/MaaAssistantArknights/graphs/contributors)
 
 ## 개발 관련 정보
 

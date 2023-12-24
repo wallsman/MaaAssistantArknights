@@ -19,10 +19,12 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="270" />
+            <ColumnDefinition Width="320" />
             <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -59,7 +61,7 @@
             Grid.Column="0"
             Margin="10"
             Block.TextAlignment="Center"
-            Text="{DynamicResource ADBPath}"
+            Text="{DynamicResource AdbPath}"
             TextWrapping="Wrap" />
         <TextBox
             Grid.Row="1"
@@ -100,7 +102,7 @@
             ToolTip="{DynamicResource ConnectionAddressTip}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="{c:Binding ActualWidth - 20, RelativeSource={RelativeSource AncestorType=ComboBox}}">
+                    <Grid Width="{c:Binding 'ActualWidth - 20', RelativeSource={RelativeSource AncestorType=ComboBox}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -113,7 +115,7 @@
                         <Button
                             Grid.Column="1"
                             HorizontalAlignment="Right"
-                            Command="{s:Action RemoveAddress_Click}"
+                            Command="{s:Action RemoveAddressClick}"
                             CommandParameter="{Binding}"
                             Content="×"
                             FontWeight="Bold" />
@@ -153,12 +155,12 @@
                 ToolTip="{DynamicResource RetryOnDisconnectedTip}" />
             <CheckBox
                 Margin="20,10"
-                Content="{DynamicResource AllowADBRestart}"
-                IsChecked="{Binding AllowADBRestart}" />
+                Content="{DynamicResource AllowAdbRestart}"
+                IsChecked="{Binding AllowAdbRestart}" />
             <CheckBox
                 Margin="20,10"
-                Content="{DynamicResource AllowADBHardRestart}"
-                IsChecked="{Binding AllowADBHardRestart}" />
+                Content="{DynamicResource AllowAdbHardRestart}"
+                IsChecked="{Binding AllowAdbHardRestart}" />
             <CheckBox
                 Margin="20,10"
                 Content="{DynamicResource AutoRestartOption}"
@@ -186,8 +188,8 @@
             Height="30"
             Margin="10"
             HorizontalAlignment="Left"
-            Command="{s:Action ReplaceADB}"
-            Content="{DynamicResource ForcedReplaceADB}" />
+            Command="{s:Action ReplaceAdb}"
+            Content="{DynamicResource ForcedReplaceAdb}" />
         <CheckBox
             Grid.Row="6"
             Grid.Column="0"
@@ -253,5 +255,30 @@
             Drop="EndsWithScript_Drop"
             PreviewDragOver="TextBox_PreviewDragOver"
             Text="{Binding EndsWithScript}" />
+        <StackPanel
+            Grid.Row="10"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            <CheckBox
+                Margin="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="{DynamicResource BlockSleep}"
+                IsChecked="{Binding BlockSleep}" />
+            <CheckBox
+                Margin="10"
+                VerticalAlignment="Center"
+                Content="{DynamicResource BlockSleepWithScreenOn}"
+                IsChecked="{Binding BlockSleepWithScreenOn}"
+                Visibility="{c:Binding BlockSleep}" />
+        </StackPanel>
+        <controls:TextBlock
+            Grid.Row="11"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Center"
+            Text="{c:Binding ScreencapCost}" />
     </Grid>
 </UserControl>
