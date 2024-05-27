@@ -50,10 +50,10 @@ namespace MaaWpfGui.Views.UI
             while (true)
             {
                 errorStr.Append(exc.Message);
-                exc = exc.InnerException;
-                if (exc != null)
+                if (exc.InnerException != null)
                 {
                     errorStr.AppendLine();
+                    exc = exc.InnerException;
                 }
                 else
                 {
@@ -83,9 +83,15 @@ namespace MaaWpfGui.Views.UI
             if (details.Contains("AsstGetVersion()") ||
                 details.Contains("DllNotFoundException") ||
                 details.Contains("lambda_method") ||
-                details.Contains("HandyControl"))
+                details.Contains("HandyControl") ||
+                (details.Contains("System.Net.Http") && details.Contains("Version")))
             {
                 return LocalizationHelper.GetString("ErrorSolutionCrash");
+            }
+
+            if (details.Contains("Hyperlink_Click") && details.Contains("StartWithShellExecuteEx"))
+            {
+                return LocalizationHelper.GetString("ErrorSolutionSelectDefaultBrowser");
             }
 
             // ReSharper disable once ConvertIfStatementToReturnStatement
@@ -109,7 +115,7 @@ namespace MaaWpfGui.Views.UI
 
         private void Hyperlink_OnClick(object sender, RoutedEventArgs e)
         {
-            Process.Start(((Hyperlink)sender).NavigateUri.AbsoluteUri);
+            Process.Start(new ProcessStartInfo(((Hyperlink)sender).NavigateUri.AbsoluteUri) { UseShellExecute = true });
         }
 
         private void CopyToClipboard()
@@ -127,7 +133,14 @@ namespace MaaWpfGui.Views.UI
                 data.SetData(DataFormats.Rtf, Encoding.UTF8.GetString(arr));
             }
 
-            Clipboard.SetDataObject(data, true);
+            try
+            {
+                Clipboard.SetDataObject(data, true);
+            }
+            catch
+            {
+                // 有时候报错了也能复制上去，这个时候复制不了也没办法了
+            }
         }
 
         private async void CopyErrorMessage_Click(object sender, RoutedEventArgs e)

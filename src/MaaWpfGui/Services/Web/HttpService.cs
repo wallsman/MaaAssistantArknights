@@ -10,6 +10,7 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 // </copyright>
+#nullable enable
 
 using System;
 using System.Collections.Generic;
@@ -76,7 +77,7 @@ namespace MaaWpfGui.Services.Web
             _client = BuildHttpClient();
         }
 
-        public async Task<double> HeadAsync(Uri uri, Dictionary<string, string> extraHeader = null)
+        public async Task<double> HeadAsync(Uri uri, Dictionary<string, string>? extraHeader = null)
         {
             try
             {
@@ -104,7 +105,7 @@ namespace MaaWpfGui.Services.Web
             }
         }
 
-        public async Task<string> GetStringAsync(Uri uri, Dictionary<string, string> extraHeader = null)
+        public async Task<string?> GetStringAsync(Uri uri, Dictionary<string, string>? extraHeader = null)
         {
             var response = await GetAsync(uri, extraHeader);
 
@@ -116,7 +117,7 @@ namespace MaaWpfGui.Services.Web
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<Stream> GetStreamAsync(Uri uri, Dictionary<string, string> extraHeader = null)
+        public async Task<Stream?> GetStreamAsync(Uri uri, Dictionary<string, string>? extraHeader = null)
         {
             var response = await GetAsync(uri, extraHeader);
 
@@ -128,7 +129,7 @@ namespace MaaWpfGui.Services.Web
             return await response.Content.ReadAsStreamAsync();
         }
 
-        public async Task<HttpResponseMessage> GetAsync(Uri uri, Dictionary<string, string> extraHeader = null, HttpCompletionOption httpCompletionOption = HttpCompletionOption.ResponseContentRead)
+        public async Task<HttpResponseMessage?> GetAsync(Uri uri, Dictionary<string, string>? extraHeader = null, HttpCompletionOption httpCompletionOption = HttpCompletionOption.ResponseContentRead)
         {
             try
             {
@@ -154,12 +155,21 @@ namespace MaaWpfGui.Services.Web
             }
         }
 
-        public async Task<string> PostAsJsonAsync<T>(Uri uri, T content, Dictionary<string, string> extraHeader = null)
+        public async Task<string?> PostAsJsonAsync<T>(Uri uri, T content, Dictionary<string, string>? extraHeader = null)
         {
             try
             {
                 var body = JsonSerializer.Serialize(content);
                 var message = new HttpRequestMessage(HttpMethod.Post, uri);
+
+                if (extraHeader is not null)
+                {
+                    foreach (var header in extraHeader)
+                    {
+                        message.Headers.Add(header.Key, header.Value);
+                    }
+                }
+
                 message.Headers.Accept.ParseAdd("application/json");
                 message.Content = new StringContent(body, Encoding.UTF8, "application/json");
                 var response = await _client.SendAsync(message);
@@ -173,7 +183,34 @@ namespace MaaWpfGui.Services.Web
             }
         }
 
-        public async Task<bool> DownloadFileAsync(Uri uri, string fileName, string contentType = "application/octet-stream")
+        public async Task<string?> PostAsFormUrlEncodedAsync(Uri uri, Dictionary<string, string?> content, Dictionary<string, string>? extraHeader = null)
+        {
+            try
+            {
+                var message = new HttpRequestMessage(HttpMethod.Post, uri);
+                message.Headers.Accept.ParseAdd("application/json");
+
+                if (extraHeader is not null)
+                {
+                    foreach (var header in extraHeader)
+                    {
+                        message.Headers.Add(header.Key, header.Value);
+                    }
+                }
+
+                message.Content = new FormUrlEncodedContent(content);
+                var response = await _client.SendAsync(message);
+                response.Log();
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Failed to send POST request to {Uri}", uri);
+                return null;
+            }
+        }
+
+        public async Task<bool> DownloadFileAsync(Uri uri, string fileName, string? contentType = "application/octet-stream")
         {
             string fileDir = Directory.GetCurrentDirectory();
             string fileNameWithTemp = fileName + ".temp";
@@ -181,7 +218,7 @@ namespace MaaWpfGui.Services.Web
             string fullFilePathWithTemp = Path.Combine(fileDir, fileNameWithTemp);
             _logger.Information("Start to download file from {Uri} and save to {TempPath}", uri, fullFilePathWithTemp);
 
-            var response = await GetAsync(uri, extraHeader: new Dictionary<string, string> { { "Accept", contentType } }, httpCompletionOption: HttpCompletionOption.ResponseHeadersRead);
+            var response = await GetAsync(uri, extraHeader: new Dictionary<string, string> { { "Accept", contentType ?? "application/octet-stream" } }, httpCompletionOption: HttpCompletionOption.ResponseHeadersRead);
 
             if (response?.StatusCode != HttpStatusCode.OK)
             {
@@ -245,7 +282,7 @@ namespace MaaWpfGui.Services.Web
             return success;
         }
 
-        private static WebProxy GetProxy()
+        private static WebProxy? GetProxy()
         {
             var proxyIsUri = Uri.TryCreate(Proxy, UriKind.RelativeOrAbsolute, out var uri);
             return (proxyIsUri && (!string.IsNullOrEmpty(Proxy))) is false ? null : new WebProxy(uri);

@@ -68,7 +68,7 @@ bool asst::BattleProcessTask::set_stage_name(const std::string& stage_name)
     if (!BattleHelper::set_stage_name(stage_name)) {
         json::value info = basic_info_with_what("UnsupportedLevel");
         auto& details = info["details"];
-        details["level"] = m_stage_name;
+        details["level"] = stage_name;
         callback(AsstMsg::SubTaskExtraInfo, info);
 
         return false;
@@ -84,16 +84,31 @@ void asst::BattleProcessTask::set_wait_until_end(bool wait_until_end)
     m_need_to_wait_until_end = wait_until_end;
 }
 
+void asst::BattleProcessTask::set_formation_task_ptr(std::shared_ptr<std::unordered_map<std::string, std::string>> value)
+{
+    m_formation_ptr = value;
+}
+
 bool asst::BattleProcessTask::to_group()
 {
     std::unordered_map<std::string, std::vector<std::string>> groups;
+    // 从编队任务中获取<干员-组名>映射
+    if (m_formation_ptr != nullptr) {
+        for (const auto& [group, oper] : *m_formation_ptr) {
+            groups.emplace(oper, std::vector<std::string> { group });
+        }
+    }
+    // 补充剩余的干员
     for (const auto& [group_name, oper_list] : get_combat_data().groups) {
+        if (groups.contains(group_name)) {
+            continue;
+        }
         std::vector<std::string> oper_name_list;
         ranges::transform(oper_list, std::back_inserter(oper_name_list), [](const auto& oper) { return oper.name; });
         groups.emplace(group_name, std::move(oper_name_list));
     }
 
-    std::unordered_set<std::string> char_set;
+    std::unordered_set<std::string> char_set; // 干员集合
     for (const auto& oper : m_cur_deployment_opers) {
         char_set.emplace(oper.name);
     }
@@ -191,8 +206,8 @@ bool asst::BattleProcessTask::do_action(const battle::copilot::Action& action, s
         break;
 
     case ActionType::SkillUsage:
-        m_skill_usage[action.name] = action.modify_usage;
-        if (action.modify_usage == SkillUsage::Times) m_skill_times[action.name] = action.modify_times;
+        m_skill_usage[name] = action.modify_usage;
+        if (action.modify_usage == SkillUsage::Times) m_skill_times[name] = action.modify_times;
         ret = true;
         break;
 
@@ -337,12 +352,9 @@ bool asst::BattleProcessTask::wait_condition(const Action& action)
         const std::string& name = get_name_from_group(action.name);
         update_image_if_empty();
         while (!need_exit()) {
-            if (check_skip_plot_button(image)) {
-                speed_up();
-            }
-            else if (!update_deployment(false, image)) {
+            if (!update_deployment(false, image)) {
                 return false;
-            };
+            }
             if (auto iter =
                     ranges::find_if(m_cur_deployment_opers, [&](const auto& oper) { return oper.name == name; });
                 iter != m_cur_deployment_opers.end() && iter->available) {
@@ -392,7 +404,7 @@ bool asst::BattleProcessTask::check_in_battle(const cv::Mat& reusable, bool weak
         auto result = analyzer.analyze();
         m_in_battle = result.has_value();
         if (m_in_battle && !result->pause_button) {
-            if (check_skip_plot_button(image)) {
+            if (check_skip_plot_button(image) && check_in_speed_up(image)) {
                 speed_up();
             }
         }

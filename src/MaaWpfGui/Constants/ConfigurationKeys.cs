@@ -32,6 +32,7 @@ namespace MaaWpfGui.Constants
         public const string Localization = "GUI.Localization";
         public const string MinimizeToTray = "GUI.MinimizeToTray";
         public const string HideCloseButton = "GUI.HideCloseButton";
+        public const string WindowTitleScrollable = "GUI.WindowTitleScrollable";
         public const string UseLogItemDateFormat = "GUI.UseLogItemDateFormat";
         public const string LogItemDateFormat = "GUI.LogItemDateFormatString";
         public const string WindowPlacement = "GUI.Placement";
@@ -39,9 +40,15 @@ namespace MaaWpfGui.Constants
         public const string SaveWindowPlacement = "GUI.Placement.SaveOnClosing";
         public const string UseAlternateStage = "GUI.UseAlternateStage";
         public const string HideUnavailableStage = "GUI.HideUnavailableStage";
+        public const string HideSeries = "GUI.HideSeries";
         public const string CustomStageCode = "GUI.CustomStageCode";
         public const string InverseClearMode = "GUI.InverseClearMode";
         public const string WindowTitlePrefix = "GUI.WindowTitlePrefix";
+        public const string WindowTitleSelectShowList = "GUI.WindowTitleSelectShowList";
+        public const string SoberLanguage = "GUI.SoberLanguage";
+        public const string Cheers = "GUI.Cheers";
+        public const string Hangover = "GUI.Hangover";
+        public const string LastBuyWineTime = "GUI.LastBuyWineTime";
 
         public const string AddressHistory = "Connect.AddressHistory";
         public const string AutoDetect = "Connect.AutoDetect";
@@ -49,6 +56,10 @@ namespace MaaWpfGui.Constants
         public const string ConnectAddress = "Connect.Address";
         public const string AdbPath = "Connect.AdbPath";
         public const string ConnectConfig = "Connect.ConnectConfig";
+        public const string MuMu12ExtrasEnabled = "Connect.MuMu12Extras.Enabled";
+        public const string MuMu12EmulatorPath = "Connect.MuMu12EmulatorPath";
+        public const string MuMu12Index = "Connect.MuMu12Index";
+        public const string MuMu12Display = "Connect.MuMu12Display";
         public const string RetryOnAdbDisconnected = "Connect.RetryOnDisconnected";
         public const string AllowAdbRestart = "Connect.AllowADBRestart";
         public const string AllowAdbHardRestart = "Connect.AllowADBHardRestart";
@@ -83,6 +94,7 @@ namespace MaaWpfGui.Constants
 
         public const string DormThreshold = "Infrast.DormThreshold";
         public const string UsesOfDrones = "Infrast.UsesOfDrones";
+        public const string ContinueTraining = "Infrast.ContinueTraining";
         public const string DefaultInfrast = "Infrast.DefaultInfrast";
         public const string IsCustomInfrastFileReadOnly = "Infrast.IsCustomInfrastFileReadOnly";
         public const string DormFilterNotStationedEnabled = "Infrast.DormFilterNotStationedEnabled";
@@ -103,6 +115,11 @@ namespace MaaWpfGui.Constants
         public const string RoguelikeRoles = "Roguelike.Roles";
         public const string RoguelikeCoreChar = "Roguelike.CoreChar";
         public const string RoguelikeStartWithEliteTwo = "Roguelike.RoguelikeStartWithEliteTwo";
+        public const string RoguelikeOnlyStartWithEliteTwo = "Roguelike.RoguelikeOnlyStartWithEliteTwo";
+        public const string Roguelike3FirstFloorFoldartal = "Roguelike.Roguelike3FirstFloorFoldartal";
+        public const string Roguelike3StartFloorFoldartal = "Roguelike.Roguelike3StartFloorFoldartal";
+        public const string Roguelike3NewSquad2StartingFoldartal = "Roguelike.Roguelike3NewSquad2StartingFoldartal";
+        public const string Roguelike3NewSquad2StartingFoldartals = "Roguelike.Roguelike3NewSquad2StartingFoldartals";
         public const string RoguelikeUseSupportUnit = "Roguelike.RoguelikeUseSupportUnit";
         public const string RoguelikeEnableNonfriendSupport = "Roguelike.RoguelikeEnableNonfriendSupport";
         public const string RoguelikeDelayAbortUntilCombatComplete = "Roguelike.RoguelikeDelayAbortUntilCombatComplete";
@@ -119,6 +136,7 @@ namespace MaaWpfGui.Constants
         public const string CreditFightSelectFormation = "Visit.CreditFightSelectFormation";
 
         public const string RecruitMaxTimes = "AutoRecruit.MaxTimes";
+        public const string AutoRecruitFirstList = "AutoRecruit.AutoRecruitFirstList";
         public const string RefreshLevel3 = "AutoRecruit.RefreshLevel3";
         public const string ForceRefresh = "AutoRecruit.ForceRefresh";
         public const string SelectExtraTags = "AutoRecruit.SelectExtraTags";
@@ -129,19 +147,24 @@ namespace MaaWpfGui.Constants
         public const string RecruitChooseLevel4 = "AutoRecruit.ChooseLevel4";
         public const string RecruitChooseLevel5 = "AutoRecruit.ChooseLevel5";
 
+        public const string CreditVisitFriends = "Mall.CreditVisitFriends";
         public const string CreditShopping = "Mall.CreditShopping";
         public const string CreditFirstListNew = "Mall.CreditFirstListNew";
         public const string CreditBlackListNew = "Mall.CreditBlackListNew";
         public const string CreditForceShoppingIfCreditFull = "Mall.CreditForceShoppingIfCreditFull";
+        public const string CreditOnlyBuyDiscount = "Mall.CreditOnlyBuyDiscount";
+        public const string CreditReserveMaxCredit = "Mall.CreidtReserveMaxCredit";
 
         public const string ReceiveAward = "Mission.ReceiveAward";
         public const string ReceiveMail = "Mission.ReceiveMail";
-
+        public const string ReceiveFreeRecruit = "Mission.ReceiveFreeRecruit";
+        public const string ReceiveOrundum = "Mission.ReceiveOrundum";
+        public const string ReceiveMining = "Mission.ReceiveMining";
+        public const string ReceiveSpecialAccess = "Mission.ReceiveSpecialAccess";
         public const string CopilotAddUserAdditional = "Copilot.AddUserAdditional";
         public const string CopilotUserAdditional = "Copilot.UserAdditional";
         public const string CopilotLoopTimes = "Copilot.LoopTimes";
         public const string CopilotTaskList = "Copilot.CopilotTaskList";
-
         public const string UpdateProxy = "VersionUpdate.Proxy";
         public const string VersionType = "VersionUpdate.VersionType";
         public const string UpdateCheck = "VersionUpdate.UpdateCheck";
@@ -175,6 +198,7 @@ namespace MaaWpfGui.Constants
         public const string UseStoneQuantity = "MainFunction.UseStone.Quantity";
         public const string TimesLimited = "MainFunction.TimesLimited";
         public const string TimesLimitedQuantity = "MainFunction.TimesLimited.Quantity";
+        public const string SeriesQuantity = "MainFunction.Series.Quantity";
         public const string DropsEnable = "MainFunction.Drops.Enable";
         public const string DropsItemId = "MainFunction.Drops.ItemId";
         public const string DropsItemName = "MainFunction.Drops.ItemName";
@@ -195,6 +219,12 @@ namespace MaaWpfGui.Constants
         public const string ExternalNotificationSmtpFrom = "ExternalNotification.Smtp.From";
         public const string ExternalNotificationSmtpTo = "ExternalNotification.Smtp.To";
         public const string ExternalNotificationServerChanSendKey = "ExternalNotification.ServerChan.SendKey";
+        public const string ExternalNotificationDiscordBotToken = "ExternalNotification.Discord.BotToken";
+        public const string ExternalNotificationDiscordUserId = "ExternalNotification.Discord.UserId";
+        public const string ExternalNotificationTelegramBotToken = "ExternalNotification.Telegram.BotToken";
+        public const string ExternalNotificationTelegramChatId = "ExternalNotification.Telegram.ChatId";
+        public const string ExternalNotificationBarkSendKey = "ExternalNotification.Bark.SendKey";
+        public const string ExternalNotificationBarkServer = "ExternalNotification.Bark.Server";
 
         // The following should not be modified manually
         public const string VersionName = "VersionUpdate.name";
@@ -210,6 +240,7 @@ namespace MaaWpfGui.Constants
         public const string GuideStepIndex = "Guide.StepIndex";
 
         public const string ForceScheduledStart = "Timer.ForceScheduledStart";
+        public const string ShowWindowBeforeForceScheduledStart = "Timer.ShowWindowBeforeForceScheduledStart";
         public const string CustomConfig = "Timer.CustomConfig";
 
         public const string AnnouncementInfo = "Announcement.AnnouncementInfo";

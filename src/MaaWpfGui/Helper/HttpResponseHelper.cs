@@ -1,3 +1,17 @@
+// <copyright file="HttpResponseHelper.cs" company="MaaAssistantArknights">
+// MaaWpfGui - A part of the MaaCoreArknights project
+// Copyright (C) 2021 MistEO and Contributors
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY
+// </copyright>
+#nullable enable
+
 using System;
 using System.IO;
 using System.Net.Http;
@@ -10,7 +24,7 @@ namespace MaaWpfGui.Helper
     {
         private static readonly ILogger _logger = Log.ForContext("SourceContext", "HttpResponseHelper");
 
-        public static async Task<bool> SaveResponseToFileAsync(HttpResponseMessage response, string saveTo, bool saveAndDeleteTmp = true)
+        public static async Task<bool> SaveResponseToFileAsync(HttpResponseMessage? response, string saveTo, bool saveAndDeleteTmp = true)
         {
             saveTo = Path.Combine(Environment.CurrentDirectory, saveTo);
 
@@ -24,7 +38,7 @@ namespace MaaWpfGui.Helper
             {
                 using var stream = await GetStreamAsync(response);
                 using var fileStream = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
-                await stream.CopyToAsync(fileStream).ConfigureAwait(false);
+                await stream!.CopyToAsync(fileStream).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -43,7 +57,7 @@ namespace MaaWpfGui.Helper
         }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public static async Task<Stream> GetStreamAsync(HttpResponseMessage response)
+        public static async Task<Stream?> GetStreamAsync(HttpResponseMessage? response)
         {
             if (response == null)
             {
@@ -61,7 +75,7 @@ namespace MaaWpfGui.Helper
             }
         }
 
-        public static async Task<string> GetStringAsync(HttpResponseMessage response)
+        public static async Task<string> GetStringAsync(HttpResponseMessage? response)
         {
             if (response == null)
             {

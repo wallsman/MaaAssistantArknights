@@ -18,6 +18,8 @@ using System.Windows;
 using System.Windows.Documents;
 using MaaWpfGui.Helper;
 using MaaWpfGui.Main;
+using MaaWpfGui.WineCompat;
+using MaaWpfGui.WineCompat.FontConfig;
 using Serilog;
 
 namespace MaaWpfGui
@@ -34,12 +36,22 @@ namespace MaaWpfGui
             Hyperlink link = sender as Hyperlink;
             if (!string.IsNullOrEmpty(link?.NavigateUri?.AbsoluteUri))
             {
-                Process.Start(new ProcessStartInfo(link.NavigateUri.AbsoluteUri));
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = link.NavigateUri.AbsoluteUri,
+                    UseShellExecute = true,
+                });
             }
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            if (WineRuntimeInformation.IsRunningUnderWine && MaaDesktopIntegration.Availabile)
+            {
+                // override buintin font map as early as possible
+                FontConfigIntegration.Install();
+            }
+
             base.OnStartup(e);
 
             string[] args = e.Args;
@@ -75,7 +87,7 @@ namespace MaaWpfGui
                     return;
                 }
 
-                Bootstrapper.ShutdownAndRestartWithOutArgs();
+                Bootstrapper.ShutdownAndRestartWithoutArgs();
             }
             catch (Exception ex)
             {

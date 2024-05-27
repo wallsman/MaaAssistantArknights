@@ -14,8 +14,10 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using MaaWpfGui.Constants;
 using MaaWpfGui.Helper;
+using MaaWpfGui.Main;
 using Stylet;
 
 namespace MaaWpfGui.ViewModels.UI
@@ -28,12 +30,29 @@ namespace MaaWpfGui.ViewModels.UI
         /// <inheritdoc/>
         protected override void OnViewLoaded()
         {
-            CheckAndUpdateNow();
+            // 更新直接重启
+            if (Instances.VersionUpdateViewModel.CheckAndUpdateNow())
+            {
+                Bootstrapper.ShutdownAndRestartWithoutArgs();
+                return;
+            }
+
             InitViewModels();
             InitProxy();
+            Task.Run(async () =>
+            {
+                await Instances.AnnouncementViewModel.CheckAndDownloadAnnouncement();
+                if (Instances.AnnouncementViewModel.DoNotRemindThisAnnouncementAgain)
+                {
+                    return;
+                }
+
+                _ = Execute.OnUIThreadAsync(() => Instances.WindowManager.ShowWindow(Instances.AnnouncementViewModel));
+            });
+            Instances.VersionUpdateViewModel.ShowUpdateOrDownload();
         }
 
-        private async void InitProxy()
+        private static async void InitProxy()
         {
             await Task.Run(Instances.AsstProxy.Init);
         }
@@ -49,12 +68,6 @@ namespace MaaWpfGui.ViewModels.UI
             ActiveItem = Instances.TaskQueueViewModel;
         }
 
-        // ReSharper disable once UnusedMethodReturnValue.Local
-        private static bool CheckAndUpdateNow()
-        {
-            return Instances.VersionUpdateViewModel.CheckAndUpdateNow();
-        }
-
         private string _windowTitle = "MAA";
 
         /// <summary>
@@ -66,6 +79,17 @@ namespace MaaWpfGui.ViewModels.UI
             set => SetAndNotify(ref _windowTitle, value);
         }
 
+        private bool _windowTitleScrollable = Convert.ToBoolean(ConfigurationHelper.GetValue(ConfigurationKeys.WindowTitleScrollable, bool.FalseString));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to scroll the window title.
+        /// </summary>
+        public bool WindowTitleScrollable
+        {
+            get => _windowTitleScrollable;
+            set => SetAndNotify(ref _windowTitleScrollable, value);
+        }
+
         private bool _showCloseButton = !Convert.ToBoolean(ConfigurationHelper.GetValue(ConfigurationKeys.HideCloseButton, bool.FalseString));
 
         /// <summary>
@@ -75,6 +99,40 @@ namespace MaaWpfGui.ViewModels.UI
         {
             get => _showCloseButton;
             set => SetAndNotify(ref _showCloseButton, value);
+        }
+
+        private bool _isWindowTopMost;
+
+        public bool IsWindowTopMost
+        {
+            get => _isWindowTopMost;
+            set
+            {
+                if (_isWindowTopMost == value)
+                {
+                    return;
+                }
+
+                SetAndNotify(ref _isWindowTopMost, value);
+            }
+        }
+
+        private Brush _windowTopMostButtonForeground = (SolidColorBrush)Application.Current.FindResource("PrimaryTextBrush");
+
+        public Brush WindowTopMostButtonForeground
+        {
+            get => _windowTopMostButtonForeground;
+            set => SetAndNotify(ref _windowTopMostButtonForeground, value);
+        }
+
+        // UI 绑定的方法
+        // ReSharper disable once UnusedMember.Global
+        public void ToggleTopMostCommand()
+        {
+            IsWindowTopMost = !IsWindowTopMost;
+            WindowTopMostButtonForeground = IsWindowTopMost
+                ? (Brush)Application.Current.FindResource("TitleBrush")
+                : (Brush)Application.Current.FindResource("PrimaryTextBrush");
         }
 
         /// <inheritdoc/>

@@ -23,7 +23,7 @@ bool asst::StageDropsTaskPlugin::verify(AsstMsg msg, const json::value& details)
     if (msg != AsstMsg::SubTaskCompleted || details.get("subtask", std::string()) != "ProcessTask") {
         return false;
     }
-    const std::string task = details.at("details").at("task").as_string();
+    const std::string task = details.get("details", "task", "");
     if (task == "Fight@EndOfAction") {
         int64_t last_start_time = status()->get_number(LastStartTimeKey).value_or(0);
         int64_t last_recognize_flag = status()->get_number(RecognitionRestrictionsKey).value_or(0);
@@ -143,7 +143,7 @@ bool asst::StageDropsTaskPlugin::recognize_drops()
 
         // more materials to reveal?
 
-        auto swipe_begin = Point { WindowWidthDefault - 40, 632 };
+        auto swipe_begin = Point { WindowWidthDefault - 240, 632 };
 
         const int swipe_dist = 200;
         ctrler()->swipe(swipe_begin, swipe_begin + swipe_dist * Point::left(), 500, true, 2, 0);
@@ -342,7 +342,7 @@ bool asst::StageDropsTaskPlugin::upload_to_server(const std::string& subtask, Re
         }
         json::value format_drop = drop;
         format_drop.as_object().erase("itemName");
-        all_drops.array_emplace(std::move(format_drop));
+        all_drops.emplace(std::move(format_drop));
     }
     body["source"] = UploadDataSource;
     body["version"] = Version;

@@ -419,6 +419,7 @@
             302,
             155
         ],
+        "preDelay": 500,
         "sub": [
             "EnterChooseLevelOfDifficulty"
         ]
@@ -642,6 +643,12 @@
         "next": [
             "ClickedCorrectStageOrSwipe",
             "#self"
+        ],
+        "ocrReplace": [
+            [
+                "-\\]",
+                "-1"
+            ]
         ]
     },
     "StageNavigationSlowlySwipeLeft": {
@@ -684,7 +691,15 @@
                 "S"
             ],
             [
+                "c",
+                "C"
+            ],
+            [
                 ":",
+                ""
+            ],
+            [
+                "'",
                 ""
             ],
             [
@@ -694,6 +709,10 @@
             [
                 "-1O",
                 "-10"
+            ],
+            [
+                "O-",
+                "0-"
             ]
         ],
         "roi": [
@@ -703,8 +722,8 @@
             50
         ]
     },
-    "ChangeToAdverseDifficulty": {
-        "template": "AdverseDifficulty.png",
+    "ChangeToRaidDifficulty": {
+        "template": "RaidDifficulty.png",
         "action": "ClickSelf",
         "roi": [
             625,
@@ -714,12 +733,12 @@
         ],
         "maxTimes": 3,
         "next": [
-            "AdverseConfirm",
+            "RaidConfirm",
             "#self"
         ]
     },
-    "AdverseConfirm": {
-        "baseTask": "ChangeToAdverseDifficulty",
+    "RaidConfirm": {
+        "baseTask": "ChangeToRaidDifficulty",
         "action": "DoNothing",
         "template": "NormalDifficulty.png",
         "next": []
@@ -1034,7 +1053,8 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
         "cache": false,
         "maxTimes": 3,
@@ -1069,6 +1089,31 @@
             "StageQueue@StartButton1TryAgain"
         ]
     },
+    "SS-OpenOcr": {
+        "Doc": "base_task",
+        "action": "ClickSelf",
+        "algorithm": "OcrDetect",
+        "text": [],
+        "postDelay": 2000,
+        "roi": [
+            0,
+            500,
+            500,
+            150
+        ]
+    },
+    "SS-Open": {
+        "Doc": "base_task",
+        "template": "empty.png",
+        "action": "ClickSelf",
+        "postDelay": 2000,
+        "roi": [
+            505,
+            57,
+            462,
+            628
+        ]
+    },
     "SideStoryStage": {
         "Doc": "base_task",
         "algorithm": "OcrDetect",
@@ -1090,6 +1135,318 @@
             60,
             1280,
             550
+        ]
+    },
+    "BB-8": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "BB-OpenOpt"
+        ],
+        "next": [
+            "BB-8@SideStoryStage",
+            "BB-8@SwipeToStage"
+        ]
+    },
+    "BB-7": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "BB-OpenOpt"
+        ],
+        "next": [
+            "BB-7@SideStoryStage",
+            "BB-7@SwipeToStage"
+        ]
+    },
+    "BB-6": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "BB-OpenOpt"
+        ],
+        "next": [
+            "BB-6@SideStoryStage",
+            "BB-6@SwipeToStage"
+        ]
+    },
+    "BB-4": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "BB-OpenOpt"
+        ],
+        "next": [
+            "BB-4@SideStoryStage",
+            "BB-4@SwipeToStage"
+        ]
+    },
+    "BB-OpenOpt": {
+        "algorithm": "JustReturn",
+        "next": [
+            "BB-OpenOcr",
+            "BB-Open"
+        ]
+    },
+    "BB-Open": {
+        "baseTask": "SS-OpenOcr",
+        "text": [
+            "巴别塔",
+            "巴别",
+            "别塔",
+            "我驻留往昔",
+            "我驻",
+            "驻留",
+            "留往",
+            "往昔",
+            "我始终如一",
+            "我始",
+            "始终",
+            "终如",
+            "如一"
+        ],
+        "roi": [
+            505,
+            57,
+            462,
+            628
+        ],
+        "next": [
+            "BBChapterToBB"
+        ]
+    },
+    "BB-OpenOcr": {
+        "baseTask": "SS-OpenOcr",
+        "text": [
+            "巴别塔",
+            "巴别",
+            "别塔",
+            "我驻留往昔",
+            "我驻",
+            "驻留",
+            "留往",
+            "往昔",
+            "我始终如一",
+            "我始",
+            "始终",
+            "终如",
+            "如一"
+        ],
+        "roi": [
+            103,
+            538,
+            175,
+            25
+        ],
+        "next": [
+            "BBChapterToBB"
+        ]
+    },
+    "BBChapterToBB": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "来"
+        ],
+        "preDelay": 2000,
+        "roi": [
+            1091,
+            610,
+            33,
+            30
+        ],
+        "next": [
+            "#self",
+            "ChapterSwipeToTheRight"
+        ]
+    },
+    "BB-8@SideStoryStage": {
+        "text": [
+            "BB-8"
+        ]
+    },
+    "BB-7@SideStoryStage": {
+        "text": [
+            "BB-7"
+        ]
+    },
+    "BB-6@SideStoryStage": {
+        "text": [
+            "BB-6"
+        ]
+    },
+    "BB-4@SideStoryStage": {
+        "text": [
+            "BB-4"
+        ]
+    },
+    "CR-8": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "CR-OpenOcr"
+        ],
+        "next": [
+            "CR-8@SideStoryStage",
+            "CR-8@SwipeToStage"
+        ]
+    },
+    "CR-7": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "CR-OpenOcr"
+        ],
+        "next": [
+            "CR-7@SideStoryStage",
+            "CR-7@SwipeToStage"
+        ]
+    },
+    "CR-6": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "CR-OpenOcr"
+        ],
+        "next": [
+            "CR-6@SideStoryStage",
+            "CR-6@SwipeToStage"
+        ]
+    },
+    "CR-OpenOcr": {
+        "baseTask": "SS-OpenOcr",
+        "text": [
+            "水晶",
+            "行动",
+            "高空",
+            "速降"
+        ],
+        "next": [
+            "CRChapterToCR"
+        ]
+    },
+    "CRChapterToCR": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "展厅",
+            "漫游"
+        ],
+        "preDelay": 1000,
+        "roi": [
+            2,
+            282,
+            198,
+            129
+        ],
+        "next": [
+            "#self",
+            "ChapterSwipeToTheRight"
+        ]
+    },
+    "CR-8@SideStoryStage": {
+        "text": [
+            "CR-8"
+        ]
+    },
+    "CR-7@SideStoryStage": {
+        "text": [
+            "CR-7"
+        ]
+    },
+    "CR-6@SideStoryStage": {
+        "text": [
+            "CR-6"
+        ]
+    },
+    "HS-9": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "HS-OpenOcr"
+        ],
+        "next": [
+            "HS-9@SideStoryStage",
+            "HS-9@SwipeToStage"
+        ]
+    },
+    "HS-8": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "HS-OpenOcr"
+        ],
+        "next": [
+            "HS-8@SideStoryStage",
+            "HS-8@SwipeToStage"
+        ]
+    },
+    "HS-7": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "HS-OpenOcr"
+        ],
+        "next": [
+            "HS-7@SideStoryStage",
+            "HS-7@SwipeToStage"
+        ]
+    },
+    "HS-5": {
+        "algorithm": "JustReturn",
+        "sub": [
+            "HS-OpenOcr"
+        ],
+        "next": [
+            "HS-5@SideStoryStage",
+            "HS-5@SwipeToStage"
+        ]
+    },
+    "HS-OpenOcr": {
+        "baseTask": "SS-OpenOcr",
+        "text": [
+            "怀黍离",
+            "荒城",
+            "核心"
+        ],
+        "ocrReplace": [
+            [
+                "怀.*离",
+                "怀黍离"
+            ]
+        ],
+        "next": [
+            "HSChapterToHS"
+        ]
+    },
+    "HSChapterToHS": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "种植",
+            "植地",
+            "地块"
+        ],
+        "preDelay": 1000,
+        "roi": [
+            787,
+            495,
+            207,
+            137
+        ],
+        "next": [
+            "#self",
+            "ChapterSwipeToTheRight"
+        ]
+    },
+    "HS-9@SideStoryStage": {
+        "text": [
+            "HS-9"
+        ]
+    },
+    "HS-8@SideStoryStage": {
+        "text": [
+            "HS-8"
+        ]
+    },
+    "HS-7@SideStoryStage": {
+        "text": [
+            "HS-7"
+        ]
+    },
+    "HS-5@SideStoryStage": {
+        "text": [
+            "HS-5"
         ]
     },
     "RS-8": {
@@ -1123,19 +1480,11 @@
         ]
     },
     "RS-OpenOcr": {
-        "action": "ClickSelf",
-        "algorithm": "OcrDetect",
+        "baseTask": "SS-OpenOcr",
         "text": [
             "银心",
             "列车",
             "特快"
-        ],
-        "postDelay": 2000,
-        "roi": [
-            0,
-            500,
-            500,
-            150
         ],
         "next": [
             "RSChapterToRS"
@@ -1144,7 +1493,6 @@
     "RSChapterToRS": {
         "algorithm": "OcrDetect",
         "action": "ClickSelf",
-        "cache": false,
         "text": [
             "站台"
         ],
@@ -1156,6 +1504,7 @@
             137
         ],
         "next": [
+            "#self",
             "ChapterSwipeToTheRight"
         ]
     },
@@ -1169,9 +1518,9 @@
             "RS-7"
         ]
     },
-    "RS-9@SideStoryStage": {
+    "RS-6@SideStoryStage": {
         "text": [
-            "RS-9"
+            "RS-6"
         ]
     },
     "ZT-9": {
@@ -1411,7 +1760,8 @@
     },
     "SL-8@SideStoryStage": {
         "text": [
-            "SL-8"
+            "SL-8",
+            "SL8"
         ]
     },
     "SL-7@SideStoryStage": {
@@ -1912,8 +2262,7 @@
         "algorithm": "JustReturn",
         "action": "DoNothing",
         "sub": [
-            "FC-Open",
-            "FCChapterToFC"
+            "FC-OpenOpt"
         ],
         "next": [
             "FC-5@SideStoryStage",
@@ -1924,8 +2273,7 @@
         "algorithm": "JustReturn",
         "action": "DoNothing",
         "sub": [
-            "FC-Open",
-            "FCChapterToFC"
+            "FC-OpenOpt"
         ],
         "next": [
             "FC-6@SideStoryStage",
@@ -1936,26 +2284,34 @@
         "algorithm": "JustReturn",
         "action": "DoNothing",
         "sub": [
-            "FC-Open",
-            "FCChapterToFC"
+            "FC-OpenOpt"
         ],
         "next": [
             "FC-7@SideStoryStage",
             "FC-7@SwipeToStage"
         ]
     },
-    "FC-Open": {
-        "action": "ClickSelf",
-        "algorithm": "OcrDetect",
+    "FC-OpenOpt": {
+        "algorithm": "JustReturn",
+        "next": [
+            "FC-OpenOcr",
+            "FC-Open"
+        ]
+    },
+    "FC-OpenOcr": {
+        "baseTask": "SS-OpenOcr",
         "text": [
             "照我以火",
             "关卡已开放"
         ],
-        "roi": [
-            0,
-            500,
-            500,
-            150
+        "next": [
+            "FCChapterToFC"
+        ]
+    },
+    "FC-Open": {
+        "baseTask": "SS-Open",
+        "next": [
+            "FCChapterToFC"
         ]
     },
     "FCChapterToFC": {
@@ -1972,7 +2328,7 @@
         ],
         "postDelay": 2000,
         "next": [
-            "FCChapterToFC",
+            "#self",
             "ChapterSwipeToTheRight"
         ]
     },
@@ -2016,13 +2372,7 @@
         ]
     },
     "IS-Open": {
-        "action": "ClickSelf",
-        "roi": [
-            476,
-            0,
-            502,
-            720
-        ],
+        "baseTask": "SS-Open",
         "sub": [
             "EnterChapterIS"
         ],
@@ -2032,14 +2382,7 @@
         ]
     },
     "IS-OpenOcr": {
-        "action": "ClickSelf",
-        "algorithm": "OcrDetect",
-        "roi": [
-            0,
-            500,
-            500,
-            150
-        ],
+        "baseTask": "SS-OpenOcr",
         "text": [
             "叙拉古人",
             "复刻"
@@ -3102,11 +3445,15 @@
     "CharsNameOcrReplace": {
         "algorithm": "OcrDetect",
         "text": [],
-        "Doc": "该任务的 ocrReplace 被所有涉及干员名的识别任务复用",
+        "Doc": "该任务的 ocrReplace 被所有涉及干员名的识别任务复用，中文被拆成3字节处理，需要包括号",
         "fullMatch": true,
         "ocrReplace": [
             [
-                "^[<4《~]+",
+                "^(?:[<4~]|《|。)+",
+                ""
+            ],
+            [
+                "^c(?!ast)",
                 ""
             ],
             [
@@ -3120,6 +3467,10 @@
             [
                 ".*弦惊.*",
                 "“弦惊”"
+            ],
+            [
+                ".*亚梅塔",
+                "菲亚梅塔"
             ],
             [
                 ".*逍遥.*",
@@ -3210,6 +3561,14 @@
                 "煌"
             ],
             [
+                "^一煌$",
+                "煌"
+            ],
+            [
+                "^一山$",
+                "山"
+            ],
+            [
                 ".*甜蜜狂搅.*",
                 "“甜蜜狂搅”"
             ],
@@ -3226,8 +3585,12 @@
                 "维荻"
             ],
             [
-                "_ancet-2",
+                ".*ancet-2",
                 "Lancet-2"
+            ],
+            [
+                "[CcOo0]ast.*le-3",
+                "Castle-3"
             ],
             [
                 ".*HRM-EX$",
@@ -3260,6 +3623,34 @@
             [
                 "^折光.*",
                 "折光"
+            ],
+            [
+                "^委$",
+                "黍"
+            ],
+            [
+                "^红集$",
+                "红隼"
+            ],
+            [
+                "小.?满",
+                "小满"
+            ],
+            [
+                ".*夹子.*",
+                "“夹子”"
+            ],
+            [
+                "应泡普卡",
+                "泡普卡"
+            ],
+            [
+                "特米米.+",
+                "特米米"
+            ],
+            [
+                "崖心.+",
+                "崖心"
             ]
         ]
     },
@@ -3279,7 +3670,8 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
         "cache": false,
         "baseTask": "StartUp",
@@ -3655,7 +4047,8 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
         "next": [
             "Home",
@@ -3696,15 +4089,16 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
         "cache": false,
         "action": "DoNothing",
         "roi": [
-            880,
-            100,
-            180,
-            120
+            844,
+            58,
+            268,
+            272
         ],
         "Doc": "有时候明明已经在主界面了，停了一小会又弹个窗。多检测几次，一直在主界面才算完成",
         "postDelay": 1000,
@@ -3720,6 +4114,7 @@
         "next": [
             "CloseAnno",
             "CloseAnnoTexas",
+            "CloseAnnoSpecialAccess",
             "TodaysSupplies",
             "NotDownloadVoice"
         ]
@@ -3757,6 +4152,15 @@
             24,
             138,
             139
+        ]
+    },
+    "CloseAnnoSpecialAccess": {
+        "baseTask": "CloseAnnoBase",
+        "roi": [
+            997,
+            90,
+            146,
+            141
         ]
     },
     "NotDownloadVoice": {
@@ -4072,6 +4476,8 @@
             80,
             380
         ],
+        "cache": false,
+        "templThreshold": 0.9,
         "maskRange": [
             1,
             255
@@ -4158,9 +4564,9 @@
         "postDelay": 1000,
         "roi": [
             1038,
-            640,
+            625,
             206,
-            46
+            61
         ],
         "exceededNext": [
             "StageSNReturnFlag",
@@ -4618,7 +5024,7 @@
         "roi": [
             50,
             376,
-            230,
+            250,
             40
         ],
         "preDelay": 3000,
@@ -4801,15 +5207,16 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
         "cache": false,
         "action": "ClickSelf",
         "roi": [
-            880,
-            100,
-            180,
-            120
+            844,
+            58,
+            268,
+            272
         ],
         "exceededNext": [
             "Fight@TodaysSupplies",
@@ -4860,7 +5267,8 @@
             "Recruit.png",
             "RecruitDark.png",
             "RecruitSami.png",
-            "RecruitMistCity.png"
+            "RecruitMistCity.png",
+            "RecruitSiege.png"
         ],
         "cache": false,
         "action": "ClickSelf",
@@ -5000,15 +5408,6 @@
             "RecruitNowConfirm"
         ]
     },
-    "ActivitiesBegin": {
-        "algorithm": "JustReturn",
-        "action": "DoNothing",
-        "next": [
-            "ReturnToActivities",
-            "MiningActivities",
-            "RecruitingActivities"
-        ]
-    },
     "ReturnToActivities": {
         "template": "Return.png",
         "templThreshold": 0.7,
@@ -5020,9 +5419,30 @@
             80
         ],
         "next": [
-            "ReturnToActivities",
+            "Stop"
+        ]
+    },
+    "MiningActivitiesBegin": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "next": [
+            "MiningActivitiesReturnHome@ReturnButtons#next",
+            "MiningActivitiesReturnHome",
+            "MiningActivities"
+        ]
+    },
+    "MiningActivitiesReturnHome": {
+        "baseTask": "Home",
+        "action": "DoNothing",
+        "template": [
+            "Terminal.png",
+            "TerminalDark.png",
+            "TerminalSami.png",
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
+        ],
+        "next": [
             "MiningActivities",
-            "RecruitingActivities",
             "Stop"
         ]
     },
@@ -5040,11 +5460,11 @@
             302
         ],
         "next": [
-            "MiningActivityDigging",
+            "MiningActivityConfirm",
             "MiningActivitiesReturn"
         ]
     },
-    "MiningActivityDigging": {
+    "MiningActivityConfirm": {
         "action": "ClickSelf",
         "roi": [
             901,
@@ -5053,24 +5473,144 @@
             182
         ],
         "next": [
-            "MiningActivityDigging",
-            "MiningActivityDiggingEnd",
-            "MiningActivitiesReturn"
-        ]
+            "MiningActivitiesEarnRewards"
+        ],
+        "postDelay": 6000
     },
-    "MiningActivityDiggingEnd": {
-        "action": "ClickSelf",
-        "roi": [
-            559,
-            563,
-            160,
-            157
+    "MiningActivitiesEarnRewards": {
+        "algorithm": "JustReturn",
+        "action": "ClickRect",
+        "specificRect": [
+            600,
+            600,
+            70,
+            70
         ],
         "next": [
             "MiningActivitiesReturn"
         ]
     },
     "MiningActivitiesReturn": {
+        "baseTask": "CloseAnno",
+        "template": "CloseAnno.png",
+        "next": [
+            "Stop"
+        ]
+    },
+    "OrundumActivitiesBegin": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "next": [
+            "OrundumActivitiesReturnHome@ReturnButtons#next",
+            "OrundumActivitiesReturnHome",
+            "OrundumActivities"
+        ]
+    },
+    "OrundumActivitiesReturnHome": {
+        "baseTask": "Home",
+        "action": "DoNothing",
+        "template": [
+            "Terminal.png",
+            "TerminalDark.png",
+            "TerminalSami.png",
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
+        ],
+        "next": [
+            "OrundumActivities",
+            "Stop"
+        ]
+    },
+    "OrundumActivities": {
+        "doc": "幸运墙领合成玉",
+        "algorithm": "OcrDetect",
+        "text": [
+            "幸运墙",
+            "幸运"
+        ],
+        "action": "ClickSelf",
+        "roi": [
+            23,
+            81,
+            182,
+            141
+        ],
+        "next": [
+            "OrundumActivitiesChoose",
+            "OrundumActivitiesReturn"
+        ],
+        "onErrorNext": [
+            "Stop"
+        ]
+    },
+    "OrundumActivitiesChoose": {
+        "baseTask": "OrundumActivitiesClick",
+        "template": "OrundumActivitiesClick.png",
+        "action": "DoNothing",
+        "sub": [
+            "OrundumActivitiesClick",
+            "OrundumActivitiesClick",
+            "OrundumActivitiesClick"
+        ],
+        "subErrorIgnored": true,
+        "next": [
+            "OrundumActivitiesConfirm",
+            "OrundumActivitiesEarnRewards",
+            "OrundumActivitiesReturn"
+        ]
+    },
+    "OrundumActivitiesClick": {
+        "action": "ClickSelf",
+        "cache": false,
+        "roi": [
+            150,
+            150,
+            1000,
+            400
+        ],
+        "templThreshold": 0.9,
+        "maskRange": [
+            1,
+            255
+        ],
+        "rectMove": [
+            10,
+            10,
+            50,
+            50
+        ]
+    },
+    "OrundumActivitiesConfirm": {
+        "action": "ClickSelf",
+        "roi": [
+            1030,
+            500,
+            200,
+            80
+        ],
+        "next": [
+            "OrundumActivitiesEarnRewards"
+        ]
+    },
+    "OrundumActivitiesEarnRewards": {
+        "action": "ClickRect",
+        "roi": [
+            590,
+            40,
+            130,
+            100
+        ],
+        "specificRect": [
+            600,
+            600,
+            70,
+            70
+        ],
+        "next": [
+            "OrundumActivitiesReturn"
+        ]
+    },
+    "OrundumActivitiesReturn": {
         "template": "CloseAnno.png",
         "action": "ClickSelf",
         "roi": [
@@ -5080,8 +5620,30 @@
             162
         ],
         "next": [
+            "Stop"
+        ]
+    },
+    "RecruitingActivitiesBegin": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "next": [
+            "RecruitingActivitiesReturnHome@ReturnButtons#next",
+            "RecruitingActivitiesReturnHome",
+            "RecruitingActivities"
+        ]
+    },
+    "RecruitingActivitiesReturnHome": {
+        "baseTask": "Home",
+        "action": "DoNothing",
+        "template": [
+            "Terminal.png",
+            "TerminalDark.png",
+            "TerminalSami.png",
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
+        ],
+        "next": [
             "RecruitingActivities",
-            "MiningActivitiesReturn",
             "Stop"
         ]
     },
@@ -5101,6 +5663,9 @@
         "next": [
             "RecruitingActivitiesConfirm",
             "RecruitingActivities"
+        ],
+        "onErrorNext": [
+            "Stop"
         ]
     },
     "RecruitingActivitiesConfirm": {
@@ -5197,6 +5762,91 @@
             143
         ],
         "next": [
+            "Home@ReturnButtons#next",
+            "Stop"
+        ]
+    },
+    "SpecialAccessActivitiesBegin": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "next": [
+            "SpecialAccessActivities@ReturnButtons#next",
+            "SpecialAccessActivitiesReturnHome",
+            "SpecialAccessActivities"
+        ]
+    },
+    "SpecialAccessActivitiesReturnHome": {
+        "baseTask": "Home",
+        "action": "DoNothing",
+        "template": [
+            "Terminal.png",
+            "TerminalDark.png",
+            "TerminalSami.png",
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
+        ],
+        "next": [
+            "SpecialAccessActivities",
+            "Stop"
+        ]
+    },
+    "SpecialAccessActivities": {
+        "doc": "五周年月卡",
+        "algorithm": "OcrDetect",
+        "text": [
+            "五周年",
+            "专享",
+            "专享活动"
+        ],
+        "action": "ClickSelf",
+        "roi": [
+            74,
+            79,
+            79,
+            41
+        ],
+        "next": [
+            "SpecialAccessActivitiesConfirm",
+            "SpecialAccessActivitiesReturn"
+        ],
+        "onErrorNext": [
+            "Stop"
+        ]
+    },
+    "SpecialAccessActivitiesConfirm": {
+        "algorithm": "OcrDetect",
+        "text": [
+            "立即",
+            "立即领取"
+        ],
+        "action": "ClickSelf",
+        "roi": [
+            933,
+            495,
+            156,
+            41
+        ],
+        "next": [
+            "SpecialAccessActivitiesEarnRewards"
+        ]
+    },
+    "SpecialAccessActivitiesEarnRewards": {
+        "algorithm": "JustReturn",
+        "action": "ClickRect",
+        "specificRect": [
+            600,
+            600,
+            70,
+            70
+        ],
+        "next": [
+            "SpecialAccessActivitiesReturn"
+        ]
+    },
+    "SpecialAccessActivitiesReturn": {
+        "baseTask": "CloseAnnoSpecialAccess",
+        "template": "CloseAnnoSpecialAccess.png",
+        "next": [
             "Stop"
         ]
     },
@@ -5217,16 +5867,21 @@
             "Task.png",
             "TaskDark.png",
             "TaskSami.png",
-            "TaskMistCity.png"
+            "TaskMistCity.png",
+            "TaskSiege.png"
         ],
         "cache": false,
+        "maskRange": [
+            1,
+            255
+        ],
         "templThreshold": 0.7,
         "action": "ClickSelf",
         "roi": [
             700,
             530,
-            130,
-            130
+            230,
+            200
         ],
         "next": [
             "ReceiveAward",
@@ -5344,9 +5999,9 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
-        "cache": false,
         "action": "DoNothing",
         "next": [
             "Mail",
@@ -5423,16 +6078,21 @@
             "Friends.png",
             "FriendsDark.png",
             "FriendsSami.png",
-            "FriendsMistCity.png"
+            "FriendsMistCity.png",
+            "FriendsSiege.png"
         ],
         "cache": false,
         "templThreshold": 0.7,
+        "maskRange": [
+            1,
+            255
+        ],
         "action": "ClickSelf",
         "roi": [
             250,
             500,
             200,
-            150
+            200
         ],
         "next": [
             "FriendsList",
@@ -5460,7 +6120,8 @@
         "next": [
             "StartToVisit",
             "NoFriends"
-        ]
+        ],
+        "preDelay": 500
     },
     "NoFriends": {
         "algorithm": "OcrDetect",
@@ -5480,13 +6141,22 @@
     },
     "StartToVisit": {
         "action": "ClickSelf",
+        "template": [
+            "StartToVisit.png",
+            "StartToVisitDetermine.png",
+            "StartToVisitSportsman"
+        ],
+        "templThreshold": [
+            0.9,
+            0.9,
+            0.9
+        ],
         "cache": false,
-        "templThreshold": 0.75,
         "roi": [
-            900,
-            0,
-            200,
-            720
+            990,
+            90,
+            195,
+            165
         ],
         "next": [
             "VisitNext",
@@ -5666,17 +6336,19 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
         "cache": false,
         "action": "Stop",
         "roi": [
-            880,
-            100,
-            180,
-            120
+            844,
+            58,
+            268,
+            272
         ],
         "crop_doc": {
+            "doc": "Heads up: YostarEN needs 133 of 'y' instead of 120",
             "roi": [
                 903,
                 120,
@@ -5722,6 +6394,10 @@
             210,
             201
         ],
+        "maskRange": [
+            1,
+            255
+        ],
         "next": [
             "CreditShop-Bought",
             "Stop"
@@ -5750,6 +6426,43 @@
             26,
             57,
             27
+        ]
+    },
+    "CreditShop-DiscountOcr": {
+        "algorithm": "OcrDetect",
+        "isAscii": true,
+        "text": [],
+        "ocrReplace": [
+            [
+                "o",
+                "0"
+            ],
+            [
+                "O",
+                "0"
+            ],
+            [
+                "I",
+                "1"
+            ],
+            [
+                "l",
+                "1"
+            ],
+            [
+                "%",
+                ""
+            ],
+            [
+                "-",
+                ""
+            ]
+        ],
+        "roi": [
+            -5,
+            23,
+            65,
+            30
         ]
     },
     "CreditShop-ProductName": {
@@ -5812,7 +6525,7 @@
     "RecruitNoPermit": {
         "action": "DoNothing",
         "roi": [
-            450,
+            300,
             600,
             190,
             110
@@ -5940,14 +6653,19 @@
             "EnterInfrast.png",
             "EnterInfrastDark.png",
             "EnterInfrastSami.png",
-            "EnterInfrastMistCity.png"
+            "EnterInfrastMistCity.png",
+            "EnterInfrastSiege.png"
         ],
         "cache": false,
+        "maskRange": [
+            1,
+            255
+        ],
         "roi": [
-            900,
+            930,
             540,
-            160,
-            160
+            230,
+            180
         ],
         "action": "ClickSelf",
         "next": [
@@ -6507,6 +7225,34 @@
         "roi": [
             980,
             180,
+            300,
+            140
+        ],
+        "templThreshold": 0.95
+    },
+    "InfrastTraining": {
+        "template": "Training.png",
+        "maskRange": [
+            1,
+            255
+        ],
+        "roi": [
+            880,
+            420,
+            400,
+            160
+        ],
+        "templThreshold": 0.95
+    },
+    "InfrastTrainingMini": {
+        "template": "TrainingMini.png",
+        "maskRange": [
+            1,
+            255
+        ],
+        "roi": [
+            980,
+            400,
             300,
             140
         ],
@@ -7559,6 +8305,159 @@
             "ClueGiveTo1stConfirm"
         ]
     },
+    "InfrastTrainingIdle": {
+        "algorithm": "OcrDetect",
+        "text": [
+            "空闲中"
+        ],
+        "action": "DoNothing",
+        "roi": [
+            350,
+            600,
+            200,
+            120
+        ]
+    },
+    "InfrastTrainingCompleted": {
+        "baseTask": "InfrastTrainingIdle",
+        "text": [
+            "训练完成"
+        ],
+        "action": "ClickSelf",
+        "postDelay": 1000,
+        "next": [
+            "CloseTaskAward"
+        ]
+    },
+    "InfrastTrainingOperatorAndSkill": {
+        "algorithm": "OcrDetect",
+        "text": [],
+        "roi": [
+            150,
+            620,
+            365,
+            35
+        ],
+        "ocrReplace": [
+            [
+                "^\\[",
+                ""
+            ],
+            [
+                "\\]",
+                "\n"
+            ]
+        ]
+    },
+    "InfrastTrainingLevel": {
+        "template": "empty.png",
+        "templThreshold": 0.9,
+        "roi": [
+            100,
+            500,
+            200,
+            130
+        ]
+    },
+    "InfrastTrainingLevel1": {},
+    "InfrastTrainingLevel2": {},
+    "InfrastTrainingLevel3": {},
+    "InfrastTrainingTimeRec0": {
+        "baseTask": "NumberOcrReplace",
+        "Doc": "HH",
+        "roi": [
+            154,
+            645,
+            35,
+            40
+        ]
+    },
+    "InfrastTrainingTimeRec1": {
+        "baseTask": "NumberOcrReplace",
+        "Doc": "MM",
+        "roi": [
+            188,
+            645,
+            35,
+            40
+        ]
+    },
+    "InfrastTrainingTimeRec2": {
+        "baseTask": "NumberOcrReplace",
+        "Doc": "SS",
+        "roi": [
+            220,
+            645,
+            35,
+            40
+        ]
+    },
+    "InfrastTrainingChooseSkillRec": {
+        "algorithm": "OcrDetect",
+        "isAscii": false,
+        "text": [],
+        "roi": [
+            470,
+            80,
+            145,
+            615
+        ]
+    },
+    "InfrastTrainingContinue1": {
+        "template": "InfrastTrainingContinue.png",
+        "action": "ClickSelf",
+        "roi": [
+            310,
+            145,
+            195,
+            185
+        ],
+        "next": [
+            "InfrastTrainingConfirm"
+        ]
+    },
+    "InfrastTrainingContinue2": {
+        "baseTask": "InfrastTrainingContinue1",
+        "template": "InfrastTrainingContinue.png",
+        "roi": [
+            310,
+            350,
+            195,
+            185
+        ]
+    },
+    "InfrastTrainingContinue3": {
+        "baseTask": "InfrastTrainingContinue1",
+        "template": "InfrastTrainingContinue.png",
+        "roi": [
+            310,
+            570,
+            195,
+            185
+        ]
+    },
+    "InfrastTrainingConfirm": {
+        "action": "ClickSelf",
+        "roi": [
+            1000,
+            550,
+            280,
+            150
+        ],
+        "postDelay": 1000,
+        "next": [
+            "InfrastTrainingLocked"
+        ]
+    },
+    "InfrastTrainingLocked": {
+        "action": "DoNothing",
+        "roi": [
+            890,
+            10,
+            200,
+            200
+        ]
+    },
     "InfrastOperListTabSkillUnClicked": {
         "action": "ClickSelf",
         "roi": [
@@ -7820,6 +8719,28 @@
         ],
         "postDelay": 500
     },
+    "BattleQuickFormationFilter-PinUnactivated": {
+        "Doc": "特关未激活",
+        "roi": [
+            725,
+            15,
+            80,
+            50
+        ]
+    },
+    "BattleQuickFormationFilter-PinActivated": {
+        "Doc": "特关激活",
+        "action": "ClickSelf",
+        "roi": [
+            725,
+            15,
+            80,
+            50
+        ],
+        "sub": [
+            "BattleQuickFormationFilter-PinUnactivated"
+        ]
+    },
     "BattleQuickFormationFilterClose": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
@@ -8030,7 +8951,7 @@
             232,
             374
         ],
-        "postDelay": 3000,
+        "postDelay": 4000,
         "next": [
             "BattleOfficiallyBegin",
             "SkipThePreBattlePlot",
@@ -8224,6 +9145,18 @@
             60
         ]
     },
+    "BattleSpeedUpCheck": {
+        "roi": [
+            1060,
+            20,
+            80,
+            70
+        ],
+        "maskRange": [
+            170,
+            220
+        ]
+    },
     "BattlePause": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
@@ -8404,7 +9337,7 @@
     "BattleSwipeOper": {
         "algorithm": "JustReturn",
         "preDelay": 400,
-        "postDelay": 100,
+        "postDelay": 150,
         "Doc": "pre 是将干员滑动到场上的 duration 系数；post 是设置干员朝向滑动的 duration",
         "specialParams": [
             400,
@@ -8469,26 +9402,26 @@
     "BattleOperCooling": {
         "template": "empty.png",
         "specialParams": [
-            1500
+            300
         ],
         "specialParams_Doc": "这个任务中作为符合range的像素点数量阈值",
         "rectMove": [
-            -45,
-            6,
-            75,
-            120
+            -68,
+            124,
+            114,
+            4
         ],
         "maskRange_Doc": "拿来做H通道的范围",
         "maskRange": [
             0,
-            10
+            20
         ],
         "specificRect_Doc": "拿来做S、V通道的范围",
         "specificRect": [
-            200,
+            100,
             255,
             0,
-            100
+            150
         ]
     },
     "BattleOperRoleRange": {
@@ -8606,15 +9539,15 @@
         "text": [],
         "ocrReplace": [
             [
-                "^.+-EX-?\\d+$",
+                "^.+-EX-?\\d+.*$",
                 "_INVALID_"
             ],
             [
-                "^.+-S-?\\d+$",
+                "^.+-S-?\\d+.*$",
                 "_INVALID_"
             ],
             [
-                "^.+-MO-?\\d+$",
+                "^.+-MO-?\\d+.*$",
                 "_INVALID_"
             ],
             [
@@ -8859,20 +9792,20 @@
         "text": [],
         "ocrReplace": [
             [
-                "o",
+                "[Oo]",
                 "0"
             ],
             [
-                "O",
-                "0"
-            ],
-            [
-                "I",
+                "[Ii]",
                 "1"
             ],
             [
-                "l",
+                "[Ll]",
                 "1"
+            ],
+            [
+                "B",
+                "8"
             ],
             [
                 "十",
@@ -8989,7 +9922,12 @@
             "DepotEnter.png",
             "DepotEnterDark.png",
             "DepotEnterSami.png",
-            "DepotEnterMistCity.png"
+            "DepotEnterMistCity.png",
+            "DepotEnterSiege.png"
+        ],
+        "maskRange": [
+            1,
+            255
         ],
         "roi": [
             1109,
@@ -9079,7 +10017,8 @@
             350,
             20,
             20
-        ]
+        ],
+        "postDelay": 500
     },
     "BattleFormationOperListSwipeToTheLeft": {
         "baseTask": "SwipeToTheLeft",
@@ -9153,10 +10092,15 @@
             "OperBoxEnter.png",
             "OperBoxEnterDark.png",
             "OperBoxEnterSami.png",
-            "OperBoxEnterMistCity.png"
+            "OperBoxEnterMistCity.png",
+            "OperBoxEnterSiege.png"
         ],
         "cache": false,
         "action": "ClickSelf",
+        "maskRange": [
+            1,
+            255
+        ],
         "roi": [
             935,
             300,
@@ -9408,6 +10352,14 @@
         "ocrReplace": [
             [
                 "LT(?=\\d)",
+                "LT-"
+            ],
+            [
+                "Lt",
+                "LT"
+            ],
+            [
+                "LT\\+",
                 "LT-"
             ]
         ]
@@ -10149,7 +11101,8 @@
             "GachaEnter.png",
             "GachaEnterDark.png",
             "GachaEnterSami.png",
-            "GachaEnterMistCity.png"
+            "GachaEnterMistCity.png",
+            "GachaEnterSiege.png"
         ],
         "cache": false,
         "roi": [
@@ -10338,15 +11291,16 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
         "cache": false,
         "action": "ClickSelf",
         "roi": [
-            880,
-            100,
-            180,
-            120
+            844,
+            58,
+            268,
+            272
         ],
         "next": [
             "Roguelike",
@@ -10566,10 +11520,22 @@
             146
         ],
         "next": [
-            "RoguelikeQuickFormationClearAndReselect-Formation",
-            "Stop"
+            "RoguelikeQuickFormationClearAndReselect-Stop",
+            "RoguelikeQuickFormationClearAndReselect-Formation"
         ],
-        "postDelay": 2000
+        "postDelay": 500
+    },
+    "RoguelikeQuickFormationClearAndReselect-Stop": {
+        "template": "Roguelike@FormationConfirm.png",
+        "action": "DoNothing",
+        "roi": [
+            1015,
+            601,
+            265,
+            119
+        ],
+        "next": [],
+        "postDelay": 500
     },
     "RoguelikeQuickFormationDelay": {
         "algorithm": "JustReturn",
@@ -10788,6 +11754,15 @@
             40
         ]
     },
+    "RoguelikeSettlementOcr-Collection": {
+        "baseTask": "NumberOcrReplace",
+        "roi": [
+            680,
+            170,
+            95,
+            40
+        ]
+    },
     "RoguelikeSettlementOcr-Combat": {
         "baseTask": "NumberOcrReplace",
         "roi": [
@@ -10798,13 +11773,23 @@
         ]
     },
     "RoguelikeSettlementOcr-Difficulty": {
-        "baseTask": "NumberOcrReplace",
-        "isAscii": false,
+        "algorithm": "OcrDetect",
+        "text": [],
         "roi": [
             750,
             372,
             120,
             31
+        ],
+        "ocrReplace": [
+            [
+                "^[^\\d]+(?=\\d+$)",
+                ""
+            ],
+            [
+                "^[^\\d]+$",
+                "0"
+            ]
         ]
     },
     "RoguelikeSettlementOcr-Emergency": {
@@ -10817,7 +11802,9 @@
         ]
     },
     "RoguelikeSettlementOcr-Exp": {
-        "baseTask": "NumberOcrReplace",
+        "algorithm": "OcrDetect",
+        "isAscii": true,
+        "text": [],
         "roi": [
             643,
             525,
@@ -10834,15 +11821,6 @@
             40
         ]
     },
-    "RoguelikeSettlementOcr-Object": {
-        "baseTask": "NumberOcrReplace",
-        "roi": [
-            680,
-            170,
-            95,
-            40
-        ]
-    },
     "RoguelikeSettlementOcr-Recruit": {
         "baseTask": "NumberOcrReplace",
         "roi": [
@@ -10853,7 +11831,9 @@
         ]
     },
     "RoguelikeSettlementOcr-Score": {
-        "baseTask": "NumberOcrReplace",
+        "algorithm": "OcrDetect",
+        "isAscii": true,
+        "text": [],
         "roi": [
             280,
             525,
@@ -10862,7 +11842,9 @@
         ]
     },
     "RoguelikeSettlementOcr-Skill": {
-        "baseTask": "NumberOcrReplace",
+        "algorithm": "OcrDetect",
+        "isAscii": true,
+        "text": [],
         "roi": [
             920,
             530,
@@ -11020,6 +12002,7 @@
             249,
             168
         ],
+        "postDelay": 1000,
         "next": [
             "Roguelike@MissionFailedFlag2",
             "Roguelike@StartExplore"
@@ -11302,19 +12285,9 @@
         ]
     },
     "Roguelike@FromIntegratedStrategies": {
-        "algorithm": "OcrDetect",
-        "action": "ClickSelf",
-        "text": [
-            "进入主题"
-        ],
-        "roi": [
-            1006,
-            445,
-            246,
-            157
-        ],
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
         "next": [
-            "Roguelike@FromIntegratedStrategies",
             "Roguelike@Begin"
         ]
     },
@@ -11563,6 +12536,17 @@
         "Doc": "base_sharp_task",
         "algorithm": "JustReturn"
     },
+    "Roguelike@HpRecognition": {
+        "baseTask": "NumberOcrReplace",
+        "Doc": "生命值识别，暂时是把整个框进去，估计会把后面的生命值也识别到，后面得改改",
+        "text": [],
+        "roi": [
+            190,
+            30,
+            60,
+            30
+        ]
+    },
     "Roguelike@InBattleFlag": {
         "template": "BattleOfficiallyBegin.png",
         "roi": [
@@ -11610,19 +12594,17 @@
         ],
         "next": [
             "Roguelike@IntegratedStrategies",
-            "Roguelike@SelectTheme"
+            "Roguelike@PreSelectTheme"
         ]
     },
     "Roguelike@LastReward": {
         "Doc": "你的上一次探索突破了至少两层困难，这一次可以获得更多支援——热水壶",
         "baseTask": "Roguelike@LastReward_default",
-        "templThreshold": 0.7,
         "template": "empty.png"
     },
     "Roguelike@LastReward2": {
         "Doc": "你的上一次探索突破了至少两层困难，这一次可以获得更多支援—— 5 源石锭",
         "baseTask": "Roguelike@LastReward_default",
-        "templThreshold": 0.7,
         "template": "empty.png"
     },
     "Roguelike@LastReward3": {
@@ -11638,6 +12620,12 @@
     "Roguelike@LastRewardConfirm": {
         "baseTask": "Roguelike@LastReward_default",
         "template": "empty.png",
+        "roi": [
+            171,
+            474,
+            935,
+            205
+        ],
         "next": [
             "Roguelike@RolesDefault",
             "Roguelike@CloseCollection"
@@ -11653,10 +12641,10 @@
         "action": "ClickSelf",
         "cache": false,
         "roi": [
-            171,
-            151,
-            935,
-            533
+            225,
+            199,
+            829,
+            241
         ],
         "next": [
             "Roguelike@LastRewardConfirm"
@@ -11667,10 +12655,10 @@
         "action": "ClickSelf",
         "cache": false,
         "roi": [
-            171,
-            151,
-            935,
-            533
+            225,
+            199,
+            829,
+            241
         ],
         "next": []
     },
@@ -11679,10 +12667,10 @@
         "action": "ClickSelf",
         "cache": false,
         "roi": [
-            171,
-            151,
-            935,
-            533
+            225,
+            199,
+            829,
+            241
         ],
         "next": [
             "RoguelikeControlTaskPlugin-Stop"
@@ -11852,6 +12840,48 @@
             60
         ]
     },
+    "Roguelike@PreSelectTheme": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "查看",
+            "TODO: image of //INTEGRATED STRATEGIES"
+        ],
+        "roi": [
+            450,
+            480,
+            60,
+            45
+        ],
+        "next": [
+            "#self",
+            "Roguelike@PreSelectThemeSwipe"
+        ]
+    },
+    "Roguelike@PreSelectThemeSwipe": {
+        "baseTask": "SwipeToTheLeft",
+        "specificRect": [
+            100,
+            560,
+            100,
+            100
+        ],
+        "rectMove": [
+            500,
+            560,
+            100,
+            100
+        ],
+        "specialParams": [
+            1000,
+            0,
+            1,
+            1
+        ],
+        "next": [
+            "Roguelike@SelectTheme"
+        ]
+    },
     "Roguelike@QuickFormation": {
         "Doc": "本任务注册了插件 RoguelikeFormationTaskPlugin",
         "action": "ClickSelf",
@@ -11999,12 +13029,25 @@
     "Roguelike@SelectTheme": {
         "algorithm": "OcrDetect",
         "action": "ClickSelf",
+        "maxTimes": 20,
         "text": [],
         "roi": [
             0,
-            29,
-            515,
-            648
+            400,
+            1000,
+            30
+        ]
+    },
+    "Roguelike@SpecialValRecognition": {
+        "algorithm": "OcrDetect",
+        "action": "DoNothing",
+        "Doc": "特殊值识别，如抗干扰值，需修改对应主题的roi",
+        "text": [],
+        "roi": [
+            615,
+            0,
+            80,
+            45
         ]
     },
     "Roguelike@SquadConfirm": {
@@ -12118,21 +13161,6 @@
             "Roguelike@Stages#next"
         ]
     },
-    "Roguelike@StageEncounterClickToLeave": {
-        "algorithm": "JustReturn",
-        "action": "ClickRect",
-        "specificRect": [
-            600,
-            600,
-            50,
-            50
-        ],
-        "next": [
-            "Roguelike@StageEncounterOptions#next",
-            "Roguelike@Stages#next",
-            "Roguelike@StageEncounterClickToLeave"
-        ]
-    },
     "Roguelike@StageEncounterEnter": {
         "Doc": "base_task",
         "template": "empty.png",
@@ -12192,8 +13220,7 @@
         "Doc": "本任务注册了插件RoguelikeStageEncounterTaskPlugin",
         "next": [
             "Roguelike@StageEncounterOptions#next",
-            "Roguelike@Stages#next",
-            "Roguelike@StageEncounterClickToLeave"
+            "Roguelike@Stages#next"
         ]
     },
     "Roguelike@StageEncounterLeaveConfirm": {
@@ -12356,7 +13383,7 @@
             "Roguelike@StageVerticalConfirmSafeHouse",
             "Roguelike@StageSafeHouseEnter",
             "Roguelike@StageEncounterOptions#next",
-            "Roguelike@StageEncounterClickToLeave"
+            "Roguelike@NextLevel"
         ]
     },
     "Roguelike@StageTrader": {
@@ -12384,6 +13411,43 @@
             "Roguelike@StageTraderLeaveConfirm"
         ]
     },
+    "Roguelike@StageTraderInvest-Arrow": {
+        "doc": "商店投资界面的箭头，99 >> 100",
+        "roi": [
+            750,
+            320,
+            100,
+            100
+        ]
+    },
+    "Roguelike@StageTraderInvest-Confirm": {
+        "algorithm": "JustReturn",
+        "action": "ClickRect",
+        "specificRect": [
+            850,
+            470,
+            300,
+            45
+        ]
+    },
+    "Roguelike@StageTraderInvest-Count": {
+        "doc": "商店投资界面的余额显示，99 >> 100",
+        "algorithm": "OcrDetect",
+        "text": [],
+        "isAscii": true,
+        "roi": [
+            570,
+            335,
+            150,
+            60
+        ],
+        "ocrReplace": [
+            [
+                ">",
+                ""
+            ]
+        ]
+    },
     "Roguelike@StageTraderInvestCancel": {
         "action": "ClickSelf",
         "roi": [
@@ -12401,22 +13465,29 @@
         ]
     },
     "Roguelike@StageTraderInvestConfirm": {
-        "action": "ClickSelf",
+        "doc": "绑定 RoguelikeInvestTaskPlugin 插件进行投资，本任务仅作为进入投资系统时的初始化确认",
         "roi": [
             852,
             422,
             278,
             144
         ],
-        "postDelay": 500,
         "exceededNext": [
             "RoguelikeControlTaskPlugin-ExitThenStop"
         ],
         "next": [
             "Roguelike@StageTraderInvestSystemError",
-            "Roguelike@StageTraderInvestSystemFull",
-            "Roguelike@StageTraderInvestConfirm",
             "Roguelike@StageTraderInvestCancel"
+        ]
+    },
+    "Roguelike@StageTraderInvestError-Count": {
+        "doc": "商店投资界面系统出错时余额显示",
+        "baseTask": "NumberOcrReplace",
+        "roi": [
+            635,
+            205,
+            70,
+            40
         ]
     },
     "Roguelike@StageTraderInvestSystem": {
@@ -12660,16 +13731,14 @@
         "template": "Roguelike@StageVerticalConfirm.png",
         "next": [
             "Roguelike@StageSafeHouseEnter",
-            "Roguelike@StageSafeHouseEnter",
             "Roguelike@StageEncounterOptions#next",
-            "Roguelike@StageEncounterClickToLeave"
+            "Roguelike@NextLevel"
         ]
     },
     "Roguelike@StageVerticalConfirmTrader": {
         "template": "Roguelike@StageVerticalConfirm.png",
         "baseTask": "Roguelike@StageVerticalConfirm",
         "next": [
-            "Roguelike@StageTraderEnter",
             "Roguelike@StageTraderEnter",
             "Roguelike@StageTraderRefreshWithDice",
             "Roguelike@StageTraderInvestSystem",
@@ -12793,7 +13862,6 @@
     },
     "Roguelike@TraderRandomShopping": {
         "Doc": "该任务注册了 RoguelikeShoppingTaskPlugin，若是点完了仍在当前界面，说明没啥要买的，直接离开商店（next 里的 PhantomStageTraderLeave）",
-        "action": "ClickSelf",
         "templThreshold": 0.7,
         "cache": false,
         "roi": [
@@ -13022,9 +14090,10 @@
     "Phantom@Roguelike@SelectTheme": {
         "baseTask": "Roguelike@SelectTheme",
         "text": [
-            "傀影"
+            "古堡笔记"
         ],
         "next": [
+            "#self",
             "Phantom@Roguelike@FromIntegratedStrategies"
         ]
     },
@@ -13171,6 +14240,10 @@
             ]
         ]
     },
+    "Phantom@Roguelike@StrategyChange_mode1": {
+        "baseTask": "Phantom@Roguelike@StrategyChange_mode4",
+        "Doc": "刷源石锭第二层就会退，这里借用第三层退的刷开局策略"
+    },
     "Phantom@Roguelike@StrategyChange_mode4": {
         "text": [
             "_default",
@@ -13225,18 +14298,6 @@
     },
     "Mizuki@Roguelike@Abandon": {},
     "Mizuki@Roguelike@ChooseDifficulty": {},
-    "Mizuki@Roguelike@ChooseDifficulty0": {
-        "baseTask": "Roguelike@ChooseDifficulty",
-        "roi": [
-            1064,
-            294,
-            216,
-            170
-        ],
-        "next": [
-            "Roguelike@StartExplore"
-        ]
-    },
     "Mizuki@Roguelike@ChooseDifficulty_Easiest": {
         "action": "ClickRect",
         "specificRect": [
@@ -13253,8 +14314,8 @@
             254,
             248
         ],
-        "next": [
-            "(SwipeToTheUp*12)"
+        "sub": [
+            "SwipeToTheUp*2"
         ]
     },
     "Mizuki@Roguelike@ChooseDifficulty_Hardest": {
@@ -13273,8 +14334,8 @@
             254,
             248
         ],
-        "next": [
-            "(SwipeToTheDown*12)"
+        "sub": [
+            "SwipeToTheDown*2"
         ]
     },
     "Mizuki@Roguelike@ChooseOper": {
@@ -13292,6 +14353,8 @@
             "Mizuki@Roguelike@LastReward4",
             "Mizuki@Roguelike@LastReward2",
             "Mizuki@Roguelike@LastReward3",
+            "Mizuki@Roguelike@LastReward5",
+            "Mizuki@Roguelike@LastReward6",
             "Mizuki@Roguelike@LastRewardRand",
             "Mizuki@Roguelike@RolesDefault"
         ]
@@ -13561,6 +14624,16 @@
     "Mizuki@Roguelike@LastReward2": {},
     "Mizuki@Roguelike@LastReward3": {},
     "Mizuki@Roguelike@LastReward4": {},
+    "Mizuki@Roguelike@LastReward5": {
+        "Doc": "你的上一次探索突破了至少两层困难，这一次可以获得更多支援—— 1 钥匙",
+        "baseTask": "Mizuki@Roguelike@LastReward_default",
+        "template": "Mizuki@Roguelike@LastReward5.png"
+    },
+    "Mizuki@Roguelike@LastReward6": {
+        "Doc": "你的上一次探索突破了至少两层困难，这一次可以获得更多支援—— 1 骰子",
+        "baseTask": "Mizuki@Roguelike@LastReward_default",
+        "template": "Mizuki@Roguelike@LastReward6.png"
+    },
     "Mizuki@Roguelike@LastRewardConfirm": {},
     "Mizuki@Roguelike@LastRewardRand": {},
     "Mizuki@Roguelike@MapObject": {
@@ -13620,9 +14693,10 @@
     "Mizuki@Roguelike@SelectTheme": {
         "baseTask": "Roguelike@SelectTheme",
         "text": [
-            "水月"
+            "生态谱系"
         ],
         "next": [
+            "#self",
             "Mizuki@Roguelike@FromIntegratedStrategies"
         ]
     },
@@ -13633,6 +14707,8 @@
             "Mizuki@Roguelike@LastReward4",
             "Mizuki@Roguelike@LastReward2",
             "Mizuki@Roguelike@LastReward3",
+            "Mizuki@Roguelike@LastReward5",
+            "Mizuki@Roguelike@LastReward6",
             "Mizuki@Roguelike@LastRewardRand",
             "Mizuki@Roguelike@RolesDefault",
             "Mizuki@Roguelike@CloseCollection",
@@ -13888,6 +14964,10 @@
             ]
         ]
     },
+    "Mizuki@Roguelike@StrategyChange_mode1": {
+        "baseTask": "Mizuki@Roguelike@StrategyChange_mode4",
+        "Doc": "刷源石锭第二层就会退，这里借用第三层退的刷开局策略"
+    },
     "Mizuki@Roguelike@StrategyChange_mode4": {
         "text": [
             "_default",
@@ -13928,7 +15008,21 @@
     "Mizuki@Roguelike@WaitForStartButtonClicked": {
         "template": "Roguelike@QuickFormation.png"
     },
-    "Sami@Roguelike@Abandon": {},
+    "Sami@Roguelike@Abandon": {
+        "template": [
+            "Sami@Roguelike@Abandon.png",
+            "Sami@Roguelike@AbandonPushDoor.png"
+        ],
+        "crop_doc": {
+            "roi": [
+                1112,
+                268,
+                53,
+                52
+            ],
+            "mask": []
+        }
+    },
     "Sami@Roguelike@ChooseDifficulty": {
         "roi": [
             1064,
@@ -13953,8 +15047,8 @@
             322,
             189
         ],
-        "next": [
-            "(SwipeToTheUp*12)"
+        "sub": [
+            "SwipeToTheUp*2"
         ]
     },
     "Sami@Roguelike@ChooseDifficulty_Hardest": {
@@ -13973,8 +15067,8 @@
             322,
             189
         ],
-        "next": [
-            "(SwipeToTheDown*12)"
+        "sub": [
+            "SwipeToTheDown*2"
         ]
     },
     "Sami@Roguelike@ChooseOper": {
@@ -13983,6 +15077,19 @@
             "Sami@Roguelike@ChooseOperConfirm",
             "Sami@Roguelike@Abandon",
             "Sami@Roguelike@ChooseOperConfirm#next"
+        ]
+    },
+    "Sami@Roguelike@ClickToDrops": {
+        "next": [
+            "Sami@Roguelike@Collapsal",
+            "Sami@Roguelike@Stages#next",
+            "Sami@Roguelike@ChooseOperFlag",
+            "Sami@Roguelike@StageEncounterSpecialClose",
+            "Sami@Roguelike@TraderRandomShopping",
+            "Sami@Roguelike@StageTraderLeave",
+            "Sami@Roguelike@DropsFlag",
+            "Sami@Roguelike@StartUpThemes#next",
+            "Sami@Roguelike@ClickToDrops"
         ]
     },
     "Sami@Roguelike@CloseCollection": {
@@ -14014,6 +15121,33 @@
         ]
     },
     "Sami@Roguelike@CloseEvent": {},
+    "Sami@Roguelike@Collapsal": {
+        "algorithm": "OcrDetect",
+        "action": "DoNothing",
+        "cache": false,
+        "text": [
+            "目空",
+            "目空一些",
+            "图像",
+            "图像损坏"
+        ],
+        "roi": [
+            1000,
+            22,
+            280,
+            165
+        ],
+        "specificRect_Doc": "x拿来当文字灰度二值化下限用",
+        "specificRect": [
+            150,
+            0,
+            0,
+            0
+        ],
+        "next": [
+            "RoguelikeControlTaskPlugin-Stop"
+        ]
+    },
     "Sami@Roguelike@Continue": {
         "roi": [
             967,
@@ -14156,6 +15290,7 @@
         ],
         "next": [
             "Sami@Roguelike@FoldartalGain",
+            "Sami@Roguelike@LastRewardChoose",
             "Sami@Roguelike@SquadConfirm#next"
         ]
     },
@@ -14170,6 +15305,7 @@
             46
         ],
         "text": [
+            "_布局_",
             "黜人",
             "猎手",
             "战士",
@@ -14188,31 +15324,41 @@
             "灌木",
             "兽类",
             "人类",
+            "到来",
+            "离去",
             "伤痕",
+            "_本因_",
             "歌唱",
             "沉默",
             "朗诵",
             "辩论",
             "慰藉",
             "告解",
+            "呼救",
             "喜悦",
             "惊讶",
             "愤怒",
             "疑惑",
             "憧憬",
             "爱恋",
+            "满足",
             "巡视",
             "筑巢",
             "捕猎",
-            "繁衍",
             "掠夺",
+            "繁衍",
             "迁徙",
+            "歇息",
             "空无"
         ],
         "ocrReplace": [
             [
                 "黜",
                 "黜人"
+            ],
+            [
+                "满",
+                "萨满"
             ],
             [
                 "\"",
@@ -14254,6 +15400,10 @@
         "ocrReplace": [
             [
                 "开始告",
+                "开始宣告"
+            ],
+            [
+                "^开始宣.*",
                 "开始宣告"
             ]
         ]
@@ -14393,6 +15543,20 @@
     "Sami@Roguelike@LastReward2": {},
     "Sami@Roguelike@LastReward3": {},
     "Sami@Roguelike@LastReward4": {},
+    "Sami@Roguelike@LastRewardChoose": {
+        "action": "DoNothing",
+        "template": "Sami@Roguelike@LastRewardChoose.png",
+        "cache": false,
+        "roi": [
+            485,
+            4,
+            368,
+            119
+        ],
+        "next": [
+            "Sami@Roguelike@SquadConfirm#next"
+        ]
+    },
     "Sami@Roguelike@LastRewardConfirm": {},
     "Sami@Roguelike@LastRewardRand": {},
     "Sami@Roguelike@MapObject": {
@@ -14456,9 +15620,10 @@
     "Sami@Roguelike@SelectTheme": {
         "baseTask": "Roguelike@SelectTheme",
         "text": [
-            "探索"
+            "科考记录"
         ],
         "next": [
+            "#self",
             "Sami@Roguelike@FromIntegratedStrategies"
         ]
     },
@@ -14595,13 +15760,6 @@
         "next": [
             "Sami@Roguelike@StageEncounterEnter",
             "Sami@Roguelike@Stages#next"
-        ]
-    },
-    "Sami@Roguelike@StageEncounterClickToLeave": {
-        "next": [
-            "Sami@Roguelike@StageEncounterOptions#next",
-            "Sami@Roguelike@Stages#next",
-            "Sami@Roguelike@StageEncounterClickToLeave"
         ]
     },
     "Sami@Roguelike@StageEncounterEnter": {},
@@ -14747,6 +15905,33 @@
             "Sami@Roguelike@NextLevelThenExit"
         ]
     },
+    "Sami@Roguelike@StageTraderRefresh": {
+        "template": "Sami@Roguelike@StageTraderRefresh.png",
+        "action": "ClickSelf",
+        "cache": false,
+        "roi": [
+            230,
+            73,
+            212,
+            141
+        ],
+        "next": [
+            "Sami@Roguelike@StageTraderRefreshConfirm"
+        ]
+    },
+    "Sami@Roguelike@StageTraderRefreshConfirm": {
+        "template": "Sami@Roguelike@StageTraderRefreshConfirm.png",
+        "action": "ClickSelf",
+        "cache": false,
+        "postDelay": 500,
+        "roi": [
+            640,
+            414,
+            504,
+            154
+        ],
+        "next": []
+    },
     "Sami@Roguelike@StageVerticalBoons": {
         "baseTask": "Roguelike@StageVertical",
         "templThreshold": 0.95,
@@ -14801,6 +15986,10 @@
         "action": "ClickSelf",
         "next": [
             "#back"
+        ],
+        "exceededNext": [
+            "Sami@Roguelike@ExitThenAbandon",
+            "Sami@Roguelike@NextLevelThenExit"
         ]
     },
     "Sami@Roguelike@StageVerticalConfirmBoons": {
@@ -15192,6 +16381,10 @@
             ]
         ]
     },
+    "Sami@Roguelike@StrategyChange_mode1": {
+        "baseTask": "Sami@Roguelike@StrategyChange_mode4",
+        "Doc": "刷源石锭第二层就会退，这里借用第三层退的刷开局策略"
+    },
     "Sami@Roguelike@StrategyChange_mode4": {
         "text": [
             "_default",
@@ -15254,15 +16447,16 @@
             "Terminal.png",
             "TerminalDark.png",
             "TerminalSami.png",
-            "TerminalMistCity.png"
+            "TerminalMistCity.png",
+            "TerminalSiege.png"
         ],
         "cache": false,
         "action": "ClickSelf",
         "roi": [
-            880,
-            100,
-            180,
-            120
+            844,
+            58,
+            268,
+            272
         ],
         "next": [
             "Reclamation",
@@ -15270,6 +16464,452 @@
             "Reclamation@TodoEnter"
         ],
         "postDelay": 1000
+    },
+    "Reclamation2": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "sub": [
+            "Reclamation2BeginPlotEnterLoading@Reclamation2Begin",
+            "Reclamation2CopiousCoppice",
+            "Reclamation2Birdland",
+            "Reclamation2SkipDays*3",
+            "Reclamation2DeleteArchive"
+        ],
+        "Doc": "现在是纯tasks实现的，先一直跑着",
+        "next": [
+            "#self"
+        ]
+    },
+    "Reclamation2Begin": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "开",
+            "始",
+            "演",
+            "算"
+        ],
+        "roi": [
+            844,
+            569,
+            436,
+            151
+        ],
+        "next": [
+            "#self",
+            "#back"
+        ]
+    },
+    "Reclamation2BeginPlot": {
+        "Doc": "点指定区域，直到左上角出现退出",
+        "roi": [
+            0,
+            0,
+            100,
+            100
+        ],
+        "cache": false,
+        "sub": [
+            "Reclamation2ClickBeginPlotTalk*10"
+        ],
+        "next": [
+            "Reclamation2LeaveStage",
+            "#self"
+        ]
+    },
+    "Reclamation2BeginPlotEnter": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "众人",
+            "汇聚",
+            "后舍"
+        ],
+        "roi": [
+            633,
+            239,
+            275,
+            156
+        ],
+        "next": [
+            "#self",
+            "Reclamation2BeginPlotLoading@Reclamation2EnterStage"
+        ]
+    },
+    "Reclamation2BeginPlotEnterLoading": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "postDelay": 8000,
+        "next": [
+            "Reclamation2BeginPlotEnter",
+            "Reclamation2Begin"
+        ]
+    },
+    "Reclamation2BeginPlotLoading": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "postDelay": 8000,
+        "next": [
+            "Reclamation2BeginPlot"
+        ]
+    },
+    "Reclamation2Birdland": {
+        "Doc": "进入聚羽之地，基地左下支线",
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "聚羽",
+            "之地",
+            "捕猎区"
+        ],
+        "preDelay": 2000,
+        "roi": [
+            598,
+            510,
+            262,
+            156
+        ],
+        "next": [
+            "#self",
+            "Reclamation2BirdlandBegin"
+        ]
+    },
+    "Reclamation2BirdlandBegin": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "sub": [
+            "Reclamation2Fight@Reclamation2EnterStage",
+            "Reclamation2LeaveStage",
+            "Reclamation2ClickDrop"
+        ]
+    },
+    "Reclamation2ClickBeginPlotTalk": {
+        "Doc": "点对话框区域",
+        "algorithm": "JustReturn",
+        "action": "ClickRect",
+        "specificRect": [
+            1072,
+            431,
+            159,
+            27
+        ],
+        "next": [
+            "#back"
+        ]
+    },
+    "Reclamation2ClickDrop": {
+        "Doc": "点击收取掉落物品",
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "行动",
+            "结束"
+        ],
+        "preDelay": 2000,
+        "roi": [
+            0,
+            158,
+            456,
+            201
+        ]
+    },
+    "Reclamation2CopiousCoppice": {
+        "Doc": "进入丰饶灌木林，基地上方支线",
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "木",
+            "林",
+            "资源区"
+        ],
+        "ocrReplace": [
+            [
+                ".*源区",
+                "资源区"
+            ]
+        ],
+        "preDelay": 2000,
+        "roi": [
+            0,
+            171,
+            207,
+            144
+        ],
+        "next": [
+            "#self",
+            "Reclamation2CopiousCoppiceBegin"
+        ]
+    },
+    "Reclamation2CopiousCoppiceBegin": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "sub": [
+            "Reclamation2Fight@Reclamation2EnterStage",
+            "Reclamation2LeaveStage",
+            "Reclamation2ClickDrop"
+        ]
+    },
+    "Reclamation2DeleteArchive": {
+        "Doc": "删除存档",
+        "action": "ClickSelf",
+        "roi": [
+            955,
+            611,
+            142,
+            109
+        ],
+        "preDelay": 500,
+        "next": [
+            "Reclamation2DeleteArchiveEnter",
+            "#self"
+        ]
+    },
+    "Reclamation2DeleteArchiveConfirm": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "确认",
+            "删除"
+        ],
+        "roi": [
+            820,
+            406,
+            308,
+            146
+        ]
+    },
+    "Reclamation2DeleteArchiveEnter": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "删除"
+        ],
+        "roi": [
+            1063,
+            550,
+            182,
+            123
+        ],
+        "sub": [
+            "Reclamation2DeleteArchiveConfirm*2"
+        ]
+    },
+    "Reclamation2Enter": {
+        "Doc": "导航先不做了，跑起来再说",
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "next": [
+            "Reclamation2Begin"
+        ],
+        "postDelay": 1000
+    },
+    "Reclamation2EnterStage": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "开始",
+            "行动"
+        ],
+        "roi": [
+            1077,
+            499,
+            203,
+            146
+        ],
+        "next": [
+            "#back"
+        ]
+    },
+    "Reclamation2Fight": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "开始",
+            "行动"
+        ],
+        "roi": [
+            1029,
+            646,
+            222,
+            58
+        ],
+        "next": [
+            "Reclamation2FightConfirm"
+        ]
+    },
+    "Reclamation2FightConfirm": {
+        "Doc": "没人的时候会有弹窗",
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "确认"
+        ],
+        "roi": [
+            646,
+            447,
+            631,
+            64
+        ],
+        "postDelay": 5000,
+        "next": [
+            "Stop"
+        ]
+    },
+    "Reclamation2LeaveStage": {
+        "action": "ClickSelf",
+        "roi": [
+            0,
+            0,
+            146,
+            154
+        ],
+        "templThreshold": [
+            0.7
+        ],
+        "postDelay": 1000,
+        "next": [
+            "Reclamation2LeaveStageConfirm",
+            "#self"
+        ]
+    },
+    "Reclamation2LeaveStageConfirm": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "确认",
+            "离开"
+        ],
+        "roi": [
+            871,
+            407,
+            238,
+            146
+        ],
+        "next": [
+            "#back"
+        ]
+    },
+    "Reclamation2SkipDays": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "postDelay": 1000,
+        "next": [
+            "Reclamation2SkipDays1",
+            "Reclamation2SkipDays2"
+        ]
+    },
+    "Reclamation2SkipDays1": {
+        "action": "ClickSelf",
+        "roi": [
+            1103,
+            1,
+            152,
+            182
+        ],
+        "preDelay": 1000,
+        "next": [
+            "Reclamation2SkipDaysAward"
+        ]
+    },
+    "Reclamation2SkipDays2": {
+        "action": "ClickSelf",
+        "roi": [
+            1051,
+            0,
+            229,
+            184
+        ],
+        "preDelay": 1000,
+        "next": [
+            "Reclamation2SkipDays2SkipTime",
+            "#self"
+        ]
+    },
+    "Reclamation2SkipDays2SkipTime": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "消磨",
+            "时间"
+        ],
+        "roi": [
+            1071,
+            104,
+            208,
+            124
+        ],
+        "sub": [
+            "Reclamation2SkipDays2SkipTimeConfig",
+            "Reclamation2SkipDays1"
+        ]
+    },
+    "Reclamation2SkipDays2SkipTimeConfig": {
+        "Doc": "消耗所有决断数",
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "确认"
+        ],
+        "roi": [
+            646,
+            447,
+            631,
+            64
+        ]
+    },
+    "Reclamation2SkipDaysAward": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "postDelay": 5000,
+        "next": [
+            "Reclamation2SkipDaysAward2",
+            "Reclamation2SkipDaysAward1"
+        ]
+    },
+    "Reclamation2SkipDaysAward1": {
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "Doc": "会自己消失",
+        "preDelay": 3000
+    },
+    "Reclamation2SkipDaysAward2": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "roi": [
+            506,
+            609,
+            272,
+            111
+        ],
+        "preDelay": 1000,
+        "postDelay": 4000,
+        "cache": false,
+        "text": [
+            "点击",
+            "任意处",
+            "继续"
+        ],
+        "next": [
+            "Reclamation2SkipDaysBeginNewDay"
+        ]
+    },
+    "Reclamation2SkipDaysBeginNewDay": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "cache": false,
+        "text": [
+            "开",
+            "启",
+            "今",
+            "日"
+        ],
+        "preDelay": 1000,
+        "roi": [
+            519,
+            525,
+            261,
+            144
+        ]
     },
     "Reclamation@AtCmdCenterFlag": {
         "algorithm": "OcrDetect",

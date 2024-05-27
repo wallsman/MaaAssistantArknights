@@ -199,7 +199,7 @@ bool asst::InfrastAbstractTask::enter_facility(int index)
         Log.warn("index out of range:", index, m_custom_config.size());
         return false;
     }
-
+    
     InfrastFacilityImageAnalyzer analyzer(ctrler()->get_image());
     analyzer.set_to_be_analyzed({ facility_name() });
     if (!analyzer.analyze()) {
@@ -211,6 +211,8 @@ bool asst::InfrastAbstractTask::enter_facility(int index)
         Log.info("facility index is out of range");
         return false;
     }
+    // 点击前先等一下，避免点太快 | Wait a moment before clicking to avoid clicking too fast
+    sleep(500);
     ctrler()->click(rect);
     m_cur_facility_index = index;
 
@@ -372,14 +374,14 @@ bool asst::InfrastAbstractTask::select_opers_review(infrast::CustomRoomConfig co
              ",", num_of_opers_expect);
 
     if (selected_count < num_of_opers_expect) {
-        Log.warn("select opers review fail: 选中干员数与期望不符");
+        Log.warn("select opers review fail: unexpected number of selected operators ");
         return false;
     }
     if (facility_name() != "Dorm" && (!m_is_custom || (room_config.names.empty() && room_config.candidates.empty()))) {
         return true;
     }
     if (selected_count < room_config.names.size()) {
-        Log.warn("select opers review fail: 存在自定义干员未选中");
+        Log.warn("select opers review fail: part of custom operators unselected");
         return false;
     }
 
@@ -398,20 +400,20 @@ bool asst::InfrastAbstractTask::select_opers_review(infrast::CustomRoomConfig co
 
         const std::string& name = name_analyzer.get_result().text;
         if (auto iter = ranges::find(room_config.names, name); iter != room_config.names.end()) {
-            Log.info(name, "在\"operators\"中，且已选中");
+            Log.info(name, "is in \"operators\"，and is selected");
             room_config.names.erase(iter);
         }
         else { // 备选干员或自动选择，只要不选工作中的干员即可
             if (oper.doing == infrast::Doing::Working) {
-                Log.warn("选了工作中的干员:", name);
-                Log.warn("select opers review fail: 非自定义配置，却选了工作中的干员");
+                Log.warn("selected operators at work:", name);
+                Log.warn("select opers review fail: non-custom configuration, but an operator at work is selected");
                 return false;
             }
         }
     }
 
     if (room_config.names.size()) {
-        Log.warn("select opers review fail: 存在自定义干员未选中");
+        Log.warn("select opers review fail: part of custom operators unselected.");
         return false;
     }
 

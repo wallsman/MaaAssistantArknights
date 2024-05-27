@@ -14,10 +14,13 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Threading;
 using GlobalHotKey;
 using MaaWpfGui.Helper;
@@ -26,9 +29,10 @@ using MaaWpfGui.Services.HotKeys;
 using MaaWpfGui.Services.Managers;
 using MaaWpfGui.Services.RemoteControl;
 using MaaWpfGui.Services.Web;
+using MaaWpfGui.States;
 using MaaWpfGui.ViewModels.UI;
 using MaaWpfGui.Views.UI;
-using Microsoft.Toolkit.Uwp.Notifications;
+using MaaWpfGui.WineCompat;
 using Serilog;
 using Serilog.Core;
 using Stylet;
@@ -41,6 +45,7 @@ namespace MaaWpfGui.Main
     /// </summary>
     public class Bootstrapper : Bootstrapper<RootViewModel>
     {
+        private static readonly RunningState _runningState = RunningState.Instance;
         private static ILogger _logger = Logger.None;
 
         // private static Mutex _mutex;
@@ -67,7 +72,7 @@ namespace MaaWpfGui.Main
             }
             */
 
-            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            Directory.SetCurrentDirectory(AppContext.BaseDirectory);
             if (Directory.Exists("debug") is false)
             {
                 Directory.CreateDirectory("debug");
@@ -96,7 +101,7 @@ namespace MaaWpfGui.Main
                 .Enrich.WithThreadId()
                 .Enrich.WithThreadName();
 
-            var uiVersion = FileVersionInfo.GetVersionInfo(Application.ResourceAssembly.Location).ProductVersion.Split('+')[0];
+            var uiVersion = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion.Split('+')[0] ?? "0.0.1";
             uiVersion = uiVersion == "0.0.1" ? "DEBUG VERSION" : uiVersion;
             var maaEnv = Environment.GetEnvironmentVariable("MAA_ENVIRONMENT") == "Debug"
                 ? "Debug"
@@ -115,6 +120,14 @@ namespace MaaWpfGui.Main
             if (IsUserAdministrator())
             {
                 _logger.Information("Run as Administrator");
+            }
+
+            if (WineRuntimeInformation.IsRunningUnderWine)
+            {
+                _logger.Information($"Running under Wine {WineRuntimeInformation.WineVersion} on {WineRuntimeInformation.HostSystemName}");
+                RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+                _logger.Information($"MaaWineBridge status: {MaaWineBridge.Availability}");
+                _logger.Information($"MaaDesktopIntegration available: {MaaDesktopIntegration.Availabile}");
             }
 
             _logger.Information("===================================");
@@ -164,7 +177,6 @@ namespace MaaWpfGui.Main
             builder.Bind<CopilotViewModel>().ToSelf().InSingletonScope();
 
             builder.Bind<AsstProxy>().ToSelf().InSingletonScope();
-            builder.Bind<TrayIcon>().ToSelf().InSingletonScope();
             builder.Bind<StageManager>().ToSelf();
 
             builder.Bind<HotKeyManager>().ToSelf().InSingletonScope();
@@ -194,22 +206,6 @@ namespace MaaWpfGui.Main
         }
 
         /// <inheritdoc/>
-        protected override void OnLaunch()
-        {
-            Task.Run(async () =>
-            {
-                if (Instances.AnnouncementViewModel.DoNotRemindThisAnnouncementAgain)
-                {
-                    return;
-                }
-
-                await Instances.AnnouncementViewModel.CheckAndDownloadAnnouncement();
-                _ = Execute.OnUIThreadAsync(() => Instances.WindowManager.ShowWindow(Instances.AnnouncementViewModel));
-            });
-            Instances.VersionUpdateViewModel.ShowUpdateOrDownload();
-        }
-
-        /// <inheritdoc/>
         /// <remarks>退出时执行啥自己加。</remarks>
         protected override void OnExit(ExitEventArgs e)
         {
@@ -222,37 +218,54 @@ namespace MaaWpfGui.Main
             // MessageBox.Show("O(∩_∩)O 拜拜");
             ETagCache.Save();
             Instances.SettingsViewModel.Sober();
+            Instances.MaaHotKeyManager.Release();
 
             // 关闭程序时清理操作中心中的通知
-            var os = RuntimeInformation.OSDescription;
-            if (string.Compare(os, "Microsoft Windows 10.0.10240", StringComparison.Ordinal) >= 0)
-            {
-                ToastNotificationManagerCompat.History.Clear();
-            }
+            ToastNotification.Cleanup();
 
-            // 注销任务栏图标
-            Instances.TrayIcon.Close();
             ConfigurationHelper.Release();
 
             _logger.Information("MaaAssistantArknights GUI exited");
             _logger.Information(string.Empty);
             Log.CloseAndFlush();
             base.OnExit(e);
+
+            if (_isRestartingWithoutArgs)
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = Environment.ProcessPath,
+                };
+
+                Process.Start(startInfo);
+            }
         }
+
+        private static bool _isRestartingWithoutArgs;
 
         /// <summary>
         /// 重启，不带参数
         /// </summary>
-        public static void ShutdownAndRestartWithOutArgs()
+        public static void ShutdownAndRestartWithoutArgs()
         {
+            _isRestartingWithoutArgs = true;
+            _logger.Information("Shutdown and restart without Args");
             Application.Current.Shutdown();
-            Log.CloseAndFlush();
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = System.Windows.Forms.Application.ExecutablePath,
-            };
+        }
 
-            Process.Start(startInfo);
+        private static bool _isWaitingToRestart;
+
+        public static async Task RestartAfterIdleAsync()
+        {
+            if (_isWaitingToRestart)
+            {
+                return;
+            }
+
+            _isWaitingToRestart = true;
+
+            await _runningState.UntilIdleAsync(60000);
+            await Application.Current.Dispatcher.InvokeAsync(ShutdownAndRestartWithoutArgs);
         }
 
         /// <inheritdoc/>

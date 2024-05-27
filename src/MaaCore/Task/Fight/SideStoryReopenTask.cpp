@@ -1,7 +1,8 @@
 #include "SideStoryReopenTask.h"
 
 #include "Config/TaskData.h"
-#include "Task/Fight/StageQueueMissionCompletedPlugin.h"
+#include "Task/Fight/MedicineCounterTaskPlugin.h"
+#include "Task/Fight/StageQueueMissionCompletedTaskPlugin.h"
 #include "Task/ProcessTask.h"
 #include "Utils/Logger.hpp"
 
@@ -184,13 +185,15 @@ bool asst::SideStoryReopenTask::fight(bool use_medicine, bool use_stone)
     auto fight_task = ProcessTask(*this, { "StageQueue@StartButton1" });
 
     // 配置药+源石
-    fight_task.set_times_limit("StageQueue@MedicineConfirm", use_medicine ? 1 : 0)
-        .set_times_limit("StageQueue@StoneConfirm", use_stone ? 1 : 0)
-        .set_times_limit("StageQueue@ExpiringMedicineConfirm", m_expiring_medicine)
+    fight_task.set_times_limit("StageQueue@StoneConfirm", use_stone ? 1 : 0)
         .set_times_limit("StageQueue@StartButton1", 1)
         .set_times_limit("StageQueue@StartButton2", 1);
 
-    auto plugin = fight_task.register_plugin<StageQueueMissionCompletedPlugin>();
+    auto medicine_plugin = fight_task.register_plugin<MedicineCounterTaskPlugin>();
+    medicine_plugin->set_count(use_medicine ? 1 : 0);
+    medicine_plugin->set_use_expiring(m_expiring_medicine);
+
+    auto plugin = fight_task.register_plugin<StageQueueMissionCompletedTaskPlugin>();
     plugin->set_drop_stats(std::move(m_drop_stats));
     plugin->set_enable_penguin(m_enable_penguin);
     plugin->set_enable_yituliu(m_enable_yituliu);

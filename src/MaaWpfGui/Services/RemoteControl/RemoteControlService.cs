@@ -1,3 +1,16 @@
+// <copyright file="RemoteControlService.cs" company="MaaAssistantArknights">
+// MaaWpfGui - A part of the MaaCoreArknights project
+// Copyright (C) 2021 MistEO and Contributors
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY
+// </copyright>
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -5,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -177,8 +191,15 @@ namespace MaaWpfGui.Services.RemoteControl
 
         private static async Task<T> InvokeInstanceAsyncFunction<T>(object instance, string methodName)
         {
-            if (instance == null) { throw new ArgumentNullException(nameof(instance)); }
-            if (string.IsNullOrEmpty(methodName)) { throw new ArgumentNullException(nameof(methodName)); }
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+
+            if (string.IsNullOrEmpty(methodName))
+            {
+                throw new ArgumentNullException(nameof(methodName));
+            }
 
             Type type = instance.GetType();
             MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
@@ -199,9 +220,15 @@ namespace MaaWpfGui.Services.RemoteControl
 
         private static TResult InvokeStaticFunction<TResult>(Type staticType, string methodName)
         {
-            if (staticType == null) { throw new ArgumentNullException(nameof(staticType)); }
+            if (staticType == null)
+            {
+                throw new ArgumentNullException(nameof(staticType));
+            }
 
-            if (string.IsNullOrEmpty(methodName)) { throw new ArgumentNullException(nameof(methodName)); }
+            if (string.IsNullOrEmpty(methodName))
+            {
+                throw new ArgumentNullException(nameof(methodName));
+            }
 
             MethodInfo methodInfo = staticType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
 
@@ -221,7 +248,7 @@ namespace MaaWpfGui.Services.RemoteControl
         {
             var endpoint = Instances.SettingsViewModel.RemoteControlGetTaskEndpointUri;
 
-            if (string.IsNullOrWhiteSpace(endpoint) || !endpoint.ToLower().StartsWith("https://"))
+            if (!IsEndpointValid(endpoint))
             {
                 return;
             }
@@ -409,7 +436,7 @@ namespace MaaWpfGui.Services.RemoteControl
                 }
 
                 var endpoint = Instances.SettingsViewModel.RemoteControlReportStatusUri;
-                if (!string.IsNullOrWhiteSpace(endpoint) && endpoint.ToLower().StartsWith("https://"))
+                if (IsEndpointValid(endpoint))
                 {
                     var uid = Instances.SettingsViewModel.RemoteControlUserIdentity;
                     var did = Instances.SettingsViewModel.RemoteControlDeviceIdentity;
@@ -446,55 +473,55 @@ namespace MaaWpfGui.Services.RemoteControl
                 switch (type)
                 {
                     case "HeartBeat":
-                    {
-                        payload = _currentSequentialTaskId;
-                        break;
-                    }
-
-                    case "StopTask":
-                    {
-                        await Task.Run(() =>
                         {
-                            if (!Instances.AsstProxy.AsstStop())
-                            {
-                                // 无法确定当前的界面，找不到借用的UI位置，因此只能Log
-                                Log.Logger.Error("Failed to stop Asst.");
-                            }
-                        });
-
-                        // 无需等待，甩出任务即可返回，远端应该用心跳来确认界面卡死和取消是否成功。
-                        break;
-                    }
-
-                    case "CaptureImageNow":
-                    {
-                        string errMsg = string.Empty;
-                        bool connected = await Task.Run(() => Instances.AsstProxy.AsstConnect(ref errMsg));
-                        if (connected)
-                        {
-                            var image = Instances.AsstProxy.AsstGetImage();
-                            if (image == null)
-                            {
-                                status = "FAILED";
-                                break;
-                            }
-
-                            byte[] bytes;
-                            using (MemoryStream stream = new MemoryStream())
-                            {
-                                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                                encoder.Frames.Add(BitmapFrame.Create(image));
-                                encoder.Save(stream);
-                                bytes = stream.ToArray();
-                            }
-
-                            payload = Convert.ToBase64String(bytes);
+                            payload = _currentSequentialTaskId;
                             break;
                         }
 
-                        status = "FAILED";
-                        break;
-                    }
+                    case "StopTask":
+                        {
+                            await Task.Run(() =>
+                            {
+                                if (!Instances.AsstProxy.AsstStop())
+                                {
+                                    // 无法确定当前的界面，找不到借用的UI位置，因此只能Log
+                                    Log.Logger.Error("Failed to stop Asst.");
+                                }
+                            });
+
+                            // 无需等待，甩出任务即可返回，远端应该用心跳来确认界面卡死和取消是否成功。
+                            break;
+                        }
+
+                    case "CaptureImageNow":
+                        {
+                            string errMsg = string.Empty;
+                            bool connected = await Task.Run(() => Instances.AsstProxy.AsstConnect(ref errMsg));
+                            if (connected)
+                            {
+                                var image = Instances.AsstProxy.AsstGetImage();
+                                if (image == null)
+                                {
+                                    status = "FAILED";
+                                    break;
+                                }
+
+                                byte[] bytes;
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    PngBitmapEncoder encoder = new PngBitmapEncoder();
+                                    encoder.Frames.Add(BitmapFrame.Create(image));
+                                    encoder.Save(stream);
+                                    bytes = stream.ToArray();
+                                }
+
+                                payload = Convert.ToBase64String(bytes);
+                                break;
+                            }
+
+                            status = "FAILED";
+                            break;
+                        }
 
                     // ReSharper disable once RedundantEmptySwitchSection
                     default:
@@ -504,7 +531,7 @@ namespace MaaWpfGui.Services.RemoteControl
                 }
 
                 var endpoint = Instances.SettingsViewModel.RemoteControlReportStatusUri;
-                if (!string.IsNullOrWhiteSpace(endpoint) && endpoint.ToLower().StartsWith("https://"))
+                if (IsEndpointValid(endpoint))
                 {
                     var uid = Instances.SettingsViewModel.RemoteControlUserIdentity;
                     var did = Instances.SettingsViewModel.RemoteControlDeviceIdentity;
@@ -548,7 +575,6 @@ namespace MaaWpfGui.Services.RemoteControl
 
             await Application.Current.Dispatcher.Invoke(async () =>
             {
-
                 // 虽然更改时已经保存过了，不过保险起见还是在点击开始之后再保存一次任务及基建列表
                 Instances.TaskQueueViewModel.TaskItemSelectionChanged();
                 Instances.SettingsViewModel.InfrastOrderSelectionChanged();
@@ -669,19 +695,8 @@ namespace MaaWpfGui.Services.RemoteControl
         {
             var endpoint = Instances.SettingsViewModel.RemoteControlGetTaskEndpointUri;
 
-            if (string.IsNullOrWhiteSpace(endpoint))
+            if (!IsEndpointValid(endpoint, alarm: true))
             {
-                using var toastEmpty = new ToastNotification(
-                    LocalizationHelper.GetString("RemoteControlConnectionTestFailEmpty"));
-                toastEmpty.Show();
-                return;
-            }
-
-            if (!endpoint.ToLower().StartsWith("https://"))
-            {
-                using var toastEmpty = new ToastNotification(
-                    LocalizationHelper.GetString("RemoteControlConnectionTestFailNotHttps"));
-                toastEmpty.Show();
                 return;
             }
 
@@ -728,6 +743,7 @@ namespace MaaWpfGui.Services.RemoteControl
                 {
                     error = e.InnerException.Message;
                 }
+
                 var errorMsg = string.Format(LocalizationHelper.GetString("RemoteControlConnectionTestFail"), error);
                 using var toastErr = new ToastNotification(errorMsg);
 
@@ -738,6 +754,41 @@ namespace MaaWpfGui.Services.RemoteControl
         public static void RegenerateDeviceIdentity()
         {
             Instances.SettingsViewModel.RemoteControlDeviceIdentity = Guid.NewGuid().ToString("N");
+        }
+
+        public static bool IsEndpointValid(string endpoint, bool alarm = false)
+        {
+            if (string.IsNullOrWhiteSpace(endpoint))
+            {
+                ShowToast("RemoteControlConnectionTestFailEmpty", alarm);
+                return false;
+            }
+
+            string lowerEndpoint = endpoint.ToLower();
+
+            if (lowerEndpoint.StartsWith("https://"))
+            {
+                return true;
+            }
+            else if (lowerEndpoint.StartsWith("http://"))
+            {
+                ShowToast("RemoteControlConnectionTestWarningHttpUnsafe", alarm);
+                return true;
+            }
+            else
+            {
+                ShowToast("RemoteControlConnectionTestFailNotHttpOrHttps", alarm);
+                return false;
+            }
+        }
+
+        public static void ShowToast(string message, bool alarm)
+        {
+            if (alarm)
+            {
+                using var toast = new ToastNotification(LocalizationHelper.GetString(message));
+                toast.Show();
+            }
         }
     }
 }

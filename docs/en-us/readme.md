@@ -37,11 +37,11 @@ Development in progress  ✿✿ヽ(°▽°)ノ✿<br>
 
 - Auto-battle, drop items recognition, auto-uploading to [Penguin Stats](https://penguin-stats.io/).
 - Auto-shifting in the Base, auto efficiency calculation of operators, optimal solution in single room.
-- Auto-recruitment, support for expedited plan. Auto-uploading recruitment data to [Penguin Stats](https://penguin-stats.io/result/stage/recruit/recruit), [Yituliu](https://yituliu.site/maarecruitdata).
+- Auto-recruitment, support for expedited plan. Auto-uploading recruitment data to [Penguin Stats](https://penguin-stats.io/result/stage/recruit/recruit), [Yituliu](https://ark.yituliu.cn/survey/maarecruitdata).
 - Visiting friends, collecting credits and purchasing items, collecting daily rewards, completing daily quests in one click!
 - Auto-battle for Integrated Strategy (I.S.) for collecting originium ingots and candles.
 - Importing JSON task file for auto-battle! [Video](https://www.bilibili.com/video/BV1H841177Fk/)
-- Depot recognition and upports exporting to [Penguin Stats Planner](https://penguin-stats.cn/planner), [Arknight Tools](https://arkn.lolicon.app/#/material), and [ARK-NIGHTS Operator Builds](https://ark-nights.com/settings)
+- Depot recognition and upports exporting to [Penguin Stats Planner](https://penguin-stats.cn/planner), [Arknight Tools](https://arkntools.app/#/material), and [ARK-NIGHTS Operator Builds](https://ark-nights.com/settings)
 - Support C, Python, Java, Rust, Golang, Java HTTP, Rust HTTP and other interfaces, easy to integrate and call, customize your MAA!
 
 Talk is cheap. Show me the pictures!<br>
@@ -51,19 +51,14 @@ Talk is cheap. Show me the pictures!<br>
 
 ## Download
 
-[Stable](https://github.com/MaaAssistantArknights/MaaAssistantArknights/releases/latest)<br>
-[Development](https://github.com/MaaAssistantArknights/MaaAssistantArknights/releases)
+- [Stable/Beta](https://github.com/MaaAssistantArknights/MaaAssistantArknights/releases/latest)<br>
+- [Nightly](https://github.com/MaaAssistantArknights/MaaAssistantArknights/releases)
 
 ## How to Use
 
 ### Basic Settings
 
-1. Please refer to [Emulator Supports](./1.3-EMULATOR_SUPPORTS.md) to configure your emulator.
-2. Change your emulator resolution to `1280 * 720` or higher with `16:9` aspect ratio.<br>
-   For YostarEN, due to game interfaces issues, we recommend changing the resolution to `1920 * 1080`.
-3. Enjoy it!
-
-See also: [User Manual](./1.1-USER_MANUAL.md)
+Check [Beginner’s Guide](./1.0-BEGINNER'S_GUIDE.md) and [User Manual](./1.1-USER_MANUAL.md).
 
 ## FAQ
 
@@ -74,7 +69,7 @@ See also: [User Manual](./1.1-USER_MANUAL.md)
 - Download speed is too slow, or the mirror site is not accessible.
 - Download halfway and prompt "login"/"authentication"
 
-Please refer to: [FAQ](./1.2-FAQ.md)
+Check [FAQ](./1.2-FAQ.md).
 
 ## Supports for overseas clients
 
@@ -174,6 +169,7 @@ Please refer to [Issue Bot Usage](./2.3-ISSUE_BOT_USAGE.md)
 
 ## Disclaimer
 
+- This software is open source under the [GNU Affero General Public License v3.0 only](https://spdx.org/licenses/AGPL-3.0-only.html).
 - The logo of this software is NOT granted rights under AGPL 3.0 License. [耗毛](https://weibo.com/u/3251357314) and Vie, the two artists and all developers of the software reserves all rights. The logo of the software shall not be used without authorization even if the project has an AGPL 3.0 License. Nor shall the logo be used for commercial purposes without authorization.
 - The software is an open-source, free of charge software only for studying and communication purposes. There is no agreement or understanding between the developers of the software and the 3rd party person who uses this software as an assistant and charges you. In that case, the developers of the software is not responsible for the problems and consequences caused.
 

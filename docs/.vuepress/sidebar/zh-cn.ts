@@ -14,6 +14,11 @@ export const zhcnSidebar = sidebar({
       collapsible: true,
       children: [
         {
+          text: "新手上路",
+          icon: "ri:guide-fill",
+          link: "新手上路",
+        },
+        {
           text: "功能介绍",
           icon: "mdi:information-outline",
           link: "详细介绍",
@@ -33,7 +38,9 @@ export const zhcnSidebar = sidebar({
         {
           text: "CLI使用指南",
           icon: "material-symbols:terminal",
-          link: "CLI使用指南",
+          prefix: "user_manual_for_cli/",
+          collapsible: true,
+          children: "structure",
         },
       ],
     },

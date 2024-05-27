@@ -1,3 +1,16 @@
+// <copyright file="CopilotItemViewModel.cs" company="MaaAssistantArknights">
+// MaaWpfGui - A part of the MaaCoreArknights project
+// Copyright (C) 2021 MistEO and Contributors
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY
+// </copyright>
+
 using MaaWpfGui.Helper;
 using Stylet;
 
@@ -10,12 +23,14 @@ namespace MaaWpfGui.ViewModels
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="filePath">The original Name of file</param>
+        /// <param name="isRaid">是否为突袭关</param>
         /// <param name="copilotId">作业站对应id，本地作业应为默认值0</param>
         /// <param name="isChecked">isChecked</param>
-        public CopilotItemViewModel(string name, string filePath, int copilotId = 0, bool isChecked = true)
+        public CopilotItemViewModel(string name, string filePath, bool isRaid = false,  int copilotId = 0, bool isChecked = true)
         {
             Name = name;
             FilePath = filePath;
+            _isRaid = isRaid;
             CopilotId = copilotId;
             _isChecked = isChecked;
         }
@@ -34,6 +49,21 @@ namespace MaaWpfGui.ViewModels
         /// Gets or sets 作业站对应id，本地作业应为默认值0
         /// </summary>
         public int CopilotId { get; set; }
+
+        private bool _isRaid;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 突袭关
+        /// </summary>
+        public bool IsRaid
+        {
+            get => _isRaid;
+            set
+            {
+                SetAndNotify(ref _isRaid, value);
+                Instances.CopilotViewModel.SaveCopilotTask();
+            }
+        }
 
         private bool _isChecked;
 

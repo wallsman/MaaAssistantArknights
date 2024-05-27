@@ -177,6 +177,20 @@ labels:
   - remove module
   - remove roguelike
 
+# `module: reclamation`
+- name: reclamation
+  content: "module: reclamation"
+  regexes:
+    "生息|演算|沙洲遗闻|[Ff]ire [Ww]ithin|[Rr]eclamation"
+  skip-if:
+  - skip all
+  - skip module
+  - skip roguelike
+  remove-if:
+  - remove all
+  - remove module
+  - remove roguelike
+
 # `module: copilot`
 - name: copilot1
   content: "module: copilot"
@@ -256,7 +270,7 @@ labels:
 - name: others
   content: "module: others"
   regexes:
-    "信用|拜访|登录|开始唤醒|连接模拟器|账号切换|远程控制|干员识别|生息演算|生息盐酸|[Vv]isit|[Ll]ogin|[Ss]tartup|MaaCore(?!.dll)"
+    "信用|拜访|登录|开始唤醒|连接模拟器|账号切换|远程控制|干员识别|[Vv]isit|[Ll]ogin|[Ss]tartup|MaaCore(?!.dll)"
   skip-if:
   - skip all
   - skip module

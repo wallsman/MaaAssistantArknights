@@ -22,8 +22,7 @@
         },
         {
             "groups": [
-                "处决者",
-                "情报官"
+                "处决者"
             ],
             "location": [
                 2,
@@ -34,6 +33,26 @@
                 0,
                 22
             ]
+        },
+        {
+            "groups": [
+                "伊内丝"
+            ],
+            "location": [
+                2,
+                5
+            ],
+            "direction": "right"
+        },
+        {
+            "groups": [
+                "益达"
+            ],
+            "location": [
+                2,
+                3
+            ],
+            "direction": "right"
         },
         {
             "groups": [

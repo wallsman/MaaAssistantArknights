@@ -1,5 +1,5 @@
 version: "1.0"
-linter: jetbrains/qodana-dotnet:2023.3-eap
+linter: jetbrains/qodana-dotnet:2023.3
 bootstrap: echo 123
 profile:
   name: qodana.recommended
@@ -22,8 +22,14 @@ exclude:
       - vsts/QodanaScan
       - src/MaaWpfGui/Views
       - src/MaaCore
-  - name: CppUnreachableCode
-  - name: CppUnusedIncludeDirective
-  - name: Xaml.RedundantNamespaceAlias
+      - src/MaaWpfGui/MaaWpfGui.csproj
+      - src/MaaWpfGui/app.manifest
+      - src/MaaWpfGui/.editorconfig
   - name: ArrangeTrailingCommaInMultilineLists
   - name: ArrangeTrailingCommaInSinglelineLists
+  - name: CppUnreachableCode
+  - name: CppUnusedIncludeDirective
+  - name: InvalidXmlDocComment
+  - name: RedundantArgumentDefaultValue
+  - name: Xaml.RedundantNamespaceAlias
+  - name: Xaml.UnexpectedTextToken

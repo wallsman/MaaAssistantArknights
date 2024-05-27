@@ -33,16 +33,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           show-progress: false
-
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.2.0
-
-      - name: Restore NuGet packages
-        run: |
-          nuget restore MAA.sln
-          if ($LASTEXITCODE) { nuget restore MAA.sln }
-          if ($LASTEXITCODE) { nuget restore MAA.sln }
-
+          submodules: recursive
+          
+      - name: Restore dependencies
+        run: dotnet restore
+      
       - name: Bootstrap MaaDeps
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -77,7 +72,7 @@ jobs:
 
       - name: Upload logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: log
           path: .\x64\Debug\debug
